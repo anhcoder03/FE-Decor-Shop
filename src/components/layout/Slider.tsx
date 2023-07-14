@@ -34,7 +34,7 @@ const Slider = () => {
         {slideImages.length > 0 &&
           slideImages.map((item) => (
             <SwiperSlide key={item.url}>
-              <img src={item.url} alt="" />
+              <img src={item.url} alt="" className="w-full" />
             </SwiperSlide>
           ))}
       </Swiper>
