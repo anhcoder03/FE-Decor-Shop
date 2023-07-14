@@ -1,3 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#111111] text-white text-base;
+    font-family: "Poppin", sans-serif;
+  }
+}
+.active-link {
+  color: #dba87f;
+}
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #dba87f !important;
+  z-index: 10;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  width: 15px;
+  background-color: #dba87f;
+  border-radius: 5px;
+}
+.header-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  transition: all 0.5s linear;
+  border-bottom: 0 !important;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.product-swiper .swiper-button-next::after,
+.product-swiper .swiper-button-prev::after {
+  font-size: 1rem;
+  color: white;
+}
+.product-swiper .swiper-button-prev,
+.product-swiper .swiper-button-next {
+  right: 0;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #dba87f;
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+.product-swiper .swiper-button-prev {
+  left: 0;
+}
+.product-swiper:hover .swiper-button-next,
+.product-swiper:hover .swiper-button-prev {
+  opacity: 1;
+}
