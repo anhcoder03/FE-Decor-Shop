@@ -1,13 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import "content";
+@import "reset";
 @layer base {
   body {
     @apply bg-[#111111] text-white text-base;
     font-family: "Poppin", sans-serif;
   }
 }
+
+.form-layout {
+  @apply grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 mb-5 lg:mb-10;
+}
+.quill {
+  position: relative;
+  .ql-toolbar {
+    position: sticky;
+    top: 0;
+    background-color: #dba87f;
+    z-index: 10;
+  }
+}
+
 .active-link {
   color: #dba87f;
 }
@@ -62,4 +77,28 @@
 .product-swiper:hover .swiper-button-next,
 .product-swiper:hover .swiper-button-prev {
   opacity: 1;
+}
+
+//table
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+}
+.table-wrapper table {
+  width: 100%;
+}
+.table-wrapper thead {
+  background-color: #222222;
+}
+.table-wrapper th,
+.table-wrapper td {
+  vertical-align: middle;
+}
+.table-wrapper th {
+  padding: 20px 30px;
+  font-weight: 600;
+  text-align: left;
+}
+.table-wrapper td {
+  padding: 15px 30px;
 }
