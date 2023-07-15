@@ -36,7 +36,7 @@ const LatestProducts = () => {
           {Array(10)
             .fill(0)
             .map((item, index) => (
-              <SwiperSlide className="grid grid-cols-5 gap-5 mb-10">
+              <SwiperSlide className="grid grid-cols-5 gap-5 mb-10" key={index}>
                 <ProductItem></ProductItem>
               </SwiperSlide>
             ))}
