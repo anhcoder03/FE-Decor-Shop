@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
 import { Table } from "../../components/table";
@@ -6,6 +6,8 @@ import { IconDelete, IconEdit } from "../../components/icons";
 import { Button } from "../../components/button";
 
 const ProductManage = () => {
+  const [category, setCategory] = useState([]);
+  const [product, setProduct] = useState([]);
   return (
     <DashboardLayout>
       <DashboardHeading title="Products" desc="Manage all products">

@@ -5,7 +5,7 @@ const ProductItem = () => {
   return (
     <div className="product-elem-item bg-[#222] rounded-lg">
       <div>
-        <a>
+        <a href="/product/:id">
           <img
             className="rounded-lg"
             src="http://splashythemes.com/opencart/OPC01/OPC010033/image/cache/catalog/demo/product/19-277x292.jpg"

@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="container flex items-center justify-between py-[30px] border-b border-b-[#ffffff]">
       <Link to="">
-        <img src="logo.png" alt="" />
+        <img src="/logo.png" alt="" />
       </Link>
       <div>
         <InputSearch></InputSearch>
