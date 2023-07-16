@@ -28,7 +28,7 @@ const Button = ({
   ) : (
     children
   );
-  if (to !== "") {
+  if (to !== "" && typeof to === "string") {
     return (
       <NavLink to={to || ""} className={styleButton}>
         <button className={styleButton} type={type}>
