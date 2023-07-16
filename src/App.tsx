@@ -9,11 +9,12 @@ import CategoryAdd from "./modules/category/CategoryAdd";
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
 const DashboardPage = React.lazy(() => import("./pages/admin/DashboardPage"));
-
+const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 function App() {
   const routers = createBrowserRouter([
     { path: "", element: <HomePage /> },
     { path: "product", element: <ProductPage /> },
+    { path: "product/:id", element: <ProductDetail /> },
     { path: "dashboard", element: <DashboardPage /> },
     { path: "manage/product", element: <ProductManage /> },
     { path: "manage/add-product", element: <ProductAdd /> },
