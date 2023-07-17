@@ -1,11 +1,12 @@
 import React from "react";
 import { LayoutMain } from "../components/layout";
-import Services from "../components/homepage/Services";
+import ProductList from "../components/product/ProductList";
+import ProductListPage from "../components/product/ProductListPage";
 
 const ProductPage = () => {
   return (
     <LayoutMain>
-      <div className="container"></div>
+      <ProductListPage></ProductListPage>
     </LayoutMain>
   );
 };
