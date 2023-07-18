@@ -21,7 +21,7 @@ const ProductListPage = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [url, setUrl] = useState("/products");
   const [loading, setLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("songu");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [products, setProducts] = useState<Tproduct[]>([]);
   const [pageCount, setPageCount] = useState(0);
   const getCategories = async () => {
@@ -34,7 +34,7 @@ const ProductListPage = () => {
   };
   const handleGetAll = () => {
     setUrl("/products");
-    setSelectedCategory("songu");
+    setSelectedCategory("");
   };
   const handlePageClick = (event: any) => {
     const page = event.selected + 1;
@@ -73,7 +73,7 @@ const ProductListPage = () => {
               <ul className="space-y-1">
                 <li
                   className={`block rounded-lg bg-[#222222] p-3 text-[16px] text-[#ffffff] hover:bg-primary hover:text-[#ffffff] cursor-pointer ${
-                    selectedCategory === "songu" ? "bg-primary" : ""
+                    selectedCategory === "" ? "bg-primary" : ""
                   }`}
                   onClick={() => handleGetAll()}
                 >
