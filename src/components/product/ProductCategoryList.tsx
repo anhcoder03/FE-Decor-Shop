@@ -3,15 +3,9 @@ import { RootState } from "../../store/configureStore";
 import { CategoryState } from "../../store/category/categorySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllCategories } from "../../store/category/handler";
+import { ICategory } from "../../types/Category";
 
-const ProductCategoryList = () => {
-  const dispatch = useDispatch();
-  const { categories, isLoading }: CategoryState = useSelector(
-    (state: RootState) => state.category
-  );
-  useEffect(() => {
-    dispatch(fetchAllCategories() as any);
-  }, [dispatch]);
+const ProductCategoryList = ({ categories, onClick }: { categories: ICategory[], onClick: () => void }) => {
   return (
     <div>
       <div className="list-category pt-[30px]">
@@ -26,10 +20,11 @@ const ProductCategoryList = () => {
             Tất cả sản phẩm
           </li>
           {categories !== null &&
-            categories?.map((item) => (
+            categories.map((item) => (
               <li
                 className="block rounded-lg bg-[#222222] p-3 text-[16px] text-[#ffffff] hover:bg-primary hover:text-[#ffffff] cursor-pointer"
                 key={item._id}
+                onClick={onClick}
               >
                 {item.name}
               </li>

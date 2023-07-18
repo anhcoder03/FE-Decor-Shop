@@ -8,7 +8,6 @@ export const fetchAllProducts = createAsyncThunk<Tproduct[]>(
   "product/fetchAllProducts",
   async () => {
     const response = await getAllProducts();
-    console.log(response);
     return response.product as Tproduct[];
   }
 );

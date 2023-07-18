@@ -2,12 +2,18 @@
 import { Tproduct } from "../types/product";
 import { instance } from "./instance";
 
-const getAllProduct = () => {
-  return instance.get("/products");
+const getAllProduct = (url = "/products") => {
+  return instance.get(url);
 };
 
 const getOneProduct = (id: any) => {
   return instance.get(`/products/${id}`);
+};
+const getProductWithSlug = (slug: any) => {
+  return instance.get(`/product/${slug}`);
+};
+const searchProduct = (key: any) => {
+  return instance.get(`/search?key=${key}`);
 };
 
 const deleteProduct = (id: number | string) => {
@@ -30,12 +36,13 @@ export {
   deleteProduct,
   createProduct,
   putProduct,
+  getProductWithSlug,
+  searchProduct,
 };
 
 export const getAllProducts = async (): Promise<any> => {
   try {
     const response = await instance.get("/products");
-    console.log(response);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return response.data;
   } catch (error) {

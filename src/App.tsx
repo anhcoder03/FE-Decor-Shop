@@ -2,22 +2,28 @@ import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import LoadingPage from "./components/common/LoadingPage";
-import ProductManage from "./modules/product/ProductManage";
-import ProductAdd from "./modules/product/ProductAdd";
-import CategoryManage from "./modules/category/CategoryManage";
-import CategoryAdd from "./modules/category/CategoryAdd";
-import CategoryEdit from "./modules/category/CategoryEdit";
-import ProductEdit from "./modules/product/ProductEdit";
-import LoadingSearch from "./components/common/LoadingSearch";
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
 const DashboardPage = React.lazy(() => import("./pages/admin/DashboardPage"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
+const ProductEdit = React.lazy(() => import("./modules/product/ProductEdit"));
+const CategoryEdit = React.lazy(
+  () => import("./modules/category/CategoryEdit")
+);
+const CategoryAdd = React.lazy(() => import("./modules/category/CategoryAdd"));
+const CategoryManage = React.lazy(
+  () => import("./modules/category/CategoryManage")
+);
+const ProductAdd = React.lazy(() => import("./modules/product/ProductAdd"));
+const ProductManage = React.lazy(
+  () => import("./modules/product/ProductManage")
+);
+
 function App() {
   const routers = createBrowserRouter([
     { path: "", element: <HomePage /> },
     { path: "product", element: <ProductPage /> },
-    { path: "product/:id", element: <ProductDetail /> },
+    { path: "product/:slug", element: <ProductDetail /> },
     { path: "dashboard", element: <DashboardPage /> },
     { path: "manage/product", element: <ProductManage /> },
     { path: "manage/add-product", element: <ProductAdd /> },

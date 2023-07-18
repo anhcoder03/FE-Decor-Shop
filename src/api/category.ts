@@ -1,5 +1,9 @@
 import { instance } from "./instance";
 
+export const getAllCategory = () => {
+  return instance.get("/categories");
+};
+
 export const getCategories = async (): Promise<any> => {
   try {
     const response = await instance.get("/categories");

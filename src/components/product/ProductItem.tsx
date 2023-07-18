@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { Link } from "react-router-dom";
@@ -5,12 +6,11 @@ import { Tproduct } from "../../types/product";
 
 const ProductItem = ({ data }: { data: Tproduct }) => {
   // if (!data) return;
-  console.log("dataItem", data);
-  
+
   return (
     <div className="product-elem-item bg-[#222] rounded-lg">
       <div>
-        <a href={`/product/${data?._id}`}>
+        <Link to={`/product/${data?.slug}`}>
           <img
             className="rounded-lg"
             src={
@@ -19,7 +19,7 @@ const ProductItem = ({ data }: { data: Tproduct }) => {
             }
             alt={data?.name}
           />
-        </a>
+        </Link>
       </div>
       <div className="pb-[35px]">
         <a className="block text-center text-[15px] pb-[10px]">
