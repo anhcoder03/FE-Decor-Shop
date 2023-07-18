@@ -5,10 +5,12 @@ import { Tproduct } from "../../types/product";
 
 const ProductItem = ({ data }: { data: Tproduct }) => {
   // if (!data) return;
+  console.log("dataItem", data);
+  
   return (
     <div className="product-elem-item bg-[#222] rounded-lg">
       <div>
-        <a href="/product/:id">
+        <a href={`/product/${data?._id}`}>
           <img
             className="rounded-lg"
             src={
