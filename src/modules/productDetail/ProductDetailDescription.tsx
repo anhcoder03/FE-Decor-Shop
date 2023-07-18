@@ -1,5 +1,7 @@
 import React from "react";
+import parse from 'html-react-parser';
 const ProductDetailDescription = ({ description }: { description: string }) => {
+
   return (
     <div>
       <section className="mb-[30px]">
@@ -9,7 +11,7 @@ const ProductDetailDescription = ({ description }: { description: string }) => {
               <a href="">Description</a>
             </div>
             <div className="">
-              <p className="text-justify">{description}</p>
+              <p className="text-justify">{parse(description) || ""}</p>
             </div>
           </div>
         </div>

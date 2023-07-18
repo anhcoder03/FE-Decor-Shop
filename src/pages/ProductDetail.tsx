@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LayoutMain } from "../components/layout";
 import ProductDetailHeader from "../modules/productDetail/ProductDetailHeader";
 import ProductDetailDescription from "../modules/productDetail/ProductDetailDescription";
+import {  useParams } from "react-router-dom";
+import { getOneProduct } from "../api/product";
+
 const ProductDetail = () => {
+  const { id} = useParams<string>();
+  const [dataDetail, setDataDetail]  = useState<any>("")
+  console.log("siuIddd", dataDetail);
+  useEffect(() => {
+    getOneProduct(id).then(({data}) => {
+      console.log("dataDtail", data?.product);
+      setDataDetail(data?.product)
+    })
+  },[id])
+
   return (
     <LayoutMain>
-      <ProductDetailHeader nameProduct="Fun Product That Does Something Cool"></ProductDetailHeader>
+      <ProductDetailHeader nameProduct="Product Name"></ProductDetailHeader>
       <section>
         <div className="relative mx-auto max-w-[1280px] py-8">
           <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
               <img
                 alt="Les Paul"
-                src="http://splashythemes.com/opencart/OPC01/OPC010033/image/cache/catalog/demo/product/11-410x432.jpg"
+                src={dataDetail?.image || ""}
                 className="aspect-square w-full rounded-xl object-cover"
               />
             </div>
@@ -25,7 +38,7 @@ const ProductDetail = () => {
               <div className="mt-8 flex justify-between">
                 <div className="max-w-[35ch] space-y-2">
                   <h1 className="text-xl font-bold sm:text-2xl">
-                    Fun Product That Does Something Cool
+                    {dataDetail?.name || ""}
                   </h1>
 
                   <p className="text-sm">Highest Rated Product</p>
@@ -78,16 +91,17 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                <p className="text-lg font-bold text-primary">$119.99</p>
+                <p className="text-lg font-bold text-primary">${dataDetail?.price || ""}</p>
               </div>
 
               <div className="mt-4">
                 <div className="prose max-w-none">
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    {/* Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Ipsa veniam dicta beatae eos ex error culpa delectus rem
                     tenetur, architecto quam nesciunt, dolor veritatis nisi
-                    minus inventore, rerum at recusandae?
+                    minus inventore, rerum at recusandae? */}
+                    
                   </p>
                 </div>
               </div>
@@ -120,7 +134,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </section>
-      <ProductDetailDescription description="this is description my product"></ProductDetailDescription>
+      <ProductDetailDescription description={dataDetail?.desc || ""}></ProductDetailDescription>
     </LayoutMain>
   );
 };
