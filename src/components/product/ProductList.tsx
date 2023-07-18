@@ -1,26 +1,39 @@
-import React, { useEffect } from "react";
 import ProductItem from "./ProductItem";
-import { useSelector, useDispatch } from "react-redux";
-import { ProductState } from "../../store/product/productSlice";
-import { RootState } from "../../store/configureStore";
-import { fetchAllProducts } from "../../store/product/handler";
+import { Tproduct } from "../../types/product";
+import CardSkeleton from "../common/CardSkeleton";
 
-const ProductList = () => {
-  const dispatch = useDispatch();
-  const { products, isLoading }: ProductState = useSelector(
-    (state: RootState) => state.product
-  );
-  console.log(products);
-  useEffect(() => {
-    dispatch(fetchAllProducts() as any);
-  }, [dispatch]);
+const ProductList = ({
+  products,
+  loading,
+}: {
+  products: Tproduct[];
+  loading: boolean;
+}) => {
   return (
-    <div className="grid grid-cols-3 gap-30px pt-[30px]">
-      {products !== null &&
-        products?.map((item) => (
-          <ProductItem key={item._id} data={item}></ProductItem>
-        ))}
-    </div>
+    <>
+      {loading && (
+        <div className="grid grid-cols-3 gap-30px pt-[30px]">
+          {Array(9)
+            .fill(0)
+            .map((item, index) => (
+              <CardSkeleton key={index}></CardSkeleton>
+            ))}
+        </div>
+      )}
+      <div className="grid grid-cols-3 gap-30px pt-[30px]">
+        {products !== null &&
+          products.map((item) => (
+            <ProductItem key={item._id} data={item}></ProductItem>
+          ))}
+        {products.length === 0 && (
+          <div className="flex items-center justify-center">
+            <span className="text-xl font-semibold text-primary">
+              Không có sản phẩm nào 😇
+            </span>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -8,7 +8,6 @@ export const fetchAllCategories = createAsyncThunk<ICategory[]>(
   "category/fetchAllCategories",
   async () => {
     const response = await getCategories();
-    console.log(response);
     return response.category as ICategory[];
   }
 );
