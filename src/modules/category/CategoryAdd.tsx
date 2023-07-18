@@ -52,7 +52,7 @@ const CategoryAdd = () => {
         toast.success(response.data.message);
         navigate("/manage/category");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response.data.message);
     }
   };
