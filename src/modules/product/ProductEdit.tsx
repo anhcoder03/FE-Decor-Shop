@@ -43,7 +43,7 @@ const ProductEdit = () => {
       console.log(data);
       setCategoryName(data?.product?.categoryId?.name);
       reset(data?.product);
-      setValue("categoryId", data?.product?.categoryId?.id);
+      setValue("categoryId", data?.product?.categoryId?._id);
       setDesc(data?.product?.desc);
     });
   }, [id]);

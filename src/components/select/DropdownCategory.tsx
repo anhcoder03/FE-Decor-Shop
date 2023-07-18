@@ -11,6 +11,7 @@ const DropdownCategory = ({
   name,
   data,
   dropdownLabel = "Phân loại danh mục",
+  categoryId,
 }: any) => {
   const { show, setShow, nodeRef } = useClickOutSide(null);
   const dropdownValue = useWatch({
