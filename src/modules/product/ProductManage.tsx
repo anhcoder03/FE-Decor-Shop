@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
@@ -5,37 +10,32 @@ import { Table } from "../../components/table";
 import { IconDelete, IconEdit } from "../../components/icons";
 import { Button } from "../../components/button";
 import { deleteProduct, getAllProduct } from "../../api/product";
-import { instance } from "../../api/instance";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Tproduct } from "../../types/product";
+import ReactPaginate from "react-paginate";
 const ProductManage = () => {
-  const [category, setCategory] = useState([]);
   const [product, setProduct] = useState([]);
- const navigate = useNavigate()
+  const [url, setUrl] = useState("/products");
+  const [pageCount, setPageCount] = useState(0);
+  const navigate = useNavigate();
+  const handlePageClick = (event: any) => {
+    const page = event.selected + 1;
+    setUrl(`/products?page=${page}`);
+    console.log(url);
+  };
   useEffect(() => {
     loadData();
-    handleGetCategories();
-  }, []);
-  console.log("category", product);
-
-  const handleGetCategories = async () => {
-    try {
-      const response: any = await instance.get("categories");
-      setCategory(response.data.category);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [url]);
 
   const loadData = () => {
-    getAllProduct().then(({ data }) => {
-      setProduct(data?.product)
-    } );
-    // toast.success("Xoá sản phẩm thành công");
+    void getAllProduct(url).then(({ data }) => {
+      setProduct(data?.product);
+      setPageCount(Math.ceil(data?.totalPage));
+    });
   };
 
-  const handleRemove = (id: number) => {
+  const handleRemove = (id: any) => {
     void Swal.fire({
       title: "Bạn muốn xoá sản phẩm này?",
       text: "Thao tác này sẽ khiến sản phẩm bị xoá vĩnh viễn!",
@@ -47,10 +47,14 @@ const ProductManage = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          deleteProduct(id).then(() => {
-            loadData();
-            void Swal.fire("Deleted!", "Your file has been deleted.", "success");
-          });
+          void (await deleteProduct(id).then(() => {
+            void loadData();
+            void Swal.fire(
+              "Deleted!",
+              "Your file has been deleted.",
+              "success"
+            );
+          }));
         } catch (error) {
           console.log(error);
         }
@@ -75,7 +79,7 @@ const ProductManage = () => {
           </tr>
         </thead>
         <tbody>
-          {product?.map((item: any, index: number) => (
+          {product?.map((item: Tproduct, index: number) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>
@@ -92,17 +96,38 @@ const ProductManage = () => {
               <td>
                 <div className="flex items-center gap-x-3 text-primary">
                   <IconEdit
-                    onClick={() =>
-                      navigate(`/manage/edit-product/${item._id}`)
-                    }
+                    onClick={() => navigate(`/manage/edit-product/${item._id}`)}
                   ></IconEdit>
-                  <IconDelete onClick={() => handleRemove(item?._id)}></IconDelete>
+                  <IconDelete
+                    onClick={() => handleRemove(item?._id)}
+                  ></IconDelete>
                 </div>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
+      <div className="py-10">
+        <ReactPaginate
+          hrefBuilder={() => {
+            return "#";
+          }}
+          breakLabel="..."
+          nextLabel=">"
+          onPageChange={handlePageClick}
+          pageCount={pageCount}
+          disableInitialCallback={true}
+          previousLabel="<"
+          renderOnZeroPageCount={null}
+          className="mb-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-[6px] text-[15px] text-[#ececec] lg:gap-x-3 lg:text-base lg:mb-0 "
+          pageLinkClassName="bg-[#222222] bg-opacity-80 page-link transition-all hover:bg-opacity-100 py-1 px-2 rounded-[5px]"
+          previousClassName="bg-[#222222] bg-opacity-80  transition-all hover:bg-opacity-100 py-1 px-2 rounded-[5px]"
+          nextClassName="bg-[#222222] nextPage bg-opacity-80  transition-all hover:bg-opacity-100 py-1 px-2 rounded-[5px]"
+          activeClassName="page-active text-primary"
+          disabledClassName="opacity-40"
+          disabledLinkClassName="hover:cursor-default"
+        />
+      </div>
     </DashboardLayout>
   );
 };
