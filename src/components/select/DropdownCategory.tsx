@@ -33,19 +33,19 @@ const DropdownCategory = ({
   return (
     <div className="relative w-full" ref={nodeRef}>
       <div
-        className="flex items-center justify-between p-5 border rounded-lg cursor-pointer bg-primary border-gray100"
+        className="flex items-center justify-between py-4 px-5 rounded-lg cursor-pointer bg-[#222222] mb-2"
         onClick={() => setShow(!show)}
       >
         <span>{label}</span>
       </div>
       <div
-        className={`absolute top-full left-0 w-full  rounded-lg bg-primary ${
+        className={`absolute top-full left-0 w-full z-20 rounded-lg bg-[#222222] ${
           show ? "" : "opacity-0 invisible"
         }`}
       >
         {data.map((item: any) => (
           <div
-            className="p-5 cursor-pointer hover:bg-gray-100"
+            className="py-4 px-5 cursor-pointer hover:bg-primary rounded-lg"
             onClick={handleClickDropdownItem}
             data-value={item._id}
             key={item._id}
