@@ -8,6 +8,7 @@ import CategoryManage from "./modules/category/CategoryManage";
 import CategoryAdd from "./modules/category/CategoryAdd";
 import CategoryEdit from "./modules/category/CategoryEdit";
 import ProductEdit from "./modules/product/ProductEdit";
+import LoadingSearch from "./components/common/LoadingSearch";
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
 const DashboardPage = React.lazy(() => import("./pages/admin/DashboardPage"));
@@ -20,7 +21,7 @@ function App() {
     { path: "dashboard", element: <DashboardPage /> },
     { path: "manage/product", element: <ProductManage /> },
     { path: "manage/add-product", element: <ProductAdd /> },
-    {path: "manage/edit-product/:id", element: <ProductEdit />},
+    { path: "manage/edit-product/:id", element: <ProductEdit /> },
     { path: "manage/category", element: <CategoryManage /> },
     { path: "manage/add-category", element: <CategoryAdd /> },
     { path: "manage/edit-category/:id", element: <CategoryEdit /> },
