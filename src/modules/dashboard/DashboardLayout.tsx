@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardHeader from "./DashboardHeader";
 import DashboardSidebar from "./DashboardSidebar";
+import { useLocation } from "react-router-dom";
 
 interface IDashboardLayoutProps {
   children: React.ReactNode;
 }
 
 const DashboardLayout = ({ children }: IDashboardLayoutProps) => {
+  const location = useLocation();
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
   return (
     <div>
       <DashboardHeader></DashboardHeader>

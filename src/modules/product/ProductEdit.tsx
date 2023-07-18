@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
@@ -19,7 +23,8 @@ import { instance } from "../../api/instance";
 const ProductEdit = () => {
   const [category, setCategory] = useState([]);
   const [desc, setDesc] = useState<string>("");
-  const [category_id, setCategory_id] = useState<any>()
+  const [categoryName, setCategoryName] = useState<string>();
+
   const schema = yup.object({
     name: yup.string().required("Phải nhập tên sản phẩm!"),
     price: yup.number().required("phải nhập giá sản phẩm"),
@@ -32,18 +37,18 @@ const ProductEdit = () => {
       toast.error(arrayError[0]?.message);
     }
   });
-  const { id }: any = useParams<string>();
+  const { id } = useParams<string>();
   useEffect(() => {
     getOneProduct(id).then(({ data }) => {
       console.log(data);
-      setCategory_id(data?.product?.categoryId?._id)
+      setCategoryName(data?.product?.categoryId?.name);
       reset(data?.product);
-      setValue("categoryId", data?.product?.categoryId?.name);
+      setValue("categoryId", data?.product?.categoryId?.id);
       setDesc(data?.product?.desc);
     });
   }, [id]);
   useEffect(() => {
-    handleGetCategories();
+    void handleGetCategories();
   }, []);
   const handleGetCategories = async () => {
     try {
@@ -66,12 +71,8 @@ const ProductEdit = () => {
     resolver: yupResolver(schema),
   });
   console.log(errors);
-  console.log("category_id", category_id);
-  
 
   const handleSubmitProduct = async (values: any) => {
-    if (!isValid) return;
-    console.log("values", values, desc);
     try {
       const product = await putProduct({ ...values, desc });
       if (product) {
@@ -85,8 +86,8 @@ const ProductEdit = () => {
   return (
     <DashboardLayout>
       <DashboardHeading
-        title="Add Product"
-        desc="Add new product"
+        title="Update Product"
+        desc="Update product"
       ></DashboardHeading>
 
       <form onSubmit={handleSubmit(handleSubmitProduct)}>
@@ -122,19 +123,12 @@ const ProductEdit = () => {
           </Field>
           <Field>
             <Label htmlFor="category">Danh mục</Label>
-            {/* <Input
-              name="categoryId"
-              placeholder="Enter product category"
-              type="text"
-              control={control}
-            ></Input> */}
             <DropdownCategory
               control={control}
               name={"categoryId"}
               setValue={setValue}
-              dropdownLabel="Phân loại danh mục"
+              dropdownLabel={categoryName}
               data={category}
-              category_id = {category_id}
             ></DropdownCategory>
           </Field>
         </div>
@@ -152,7 +146,7 @@ const ProductEdit = () => {
           </Field>
         </div>
         <Button type="submit" className="mx-auto w-[250px] h-14">
-          Add New Product
+          Update Product
         </Button>
       </form>
     </DashboardLayout>
