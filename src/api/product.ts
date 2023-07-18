@@ -31,3 +31,14 @@ export {
   createProduct,
   putProduct,
 };
+
+export const getAllProducts = async (): Promise<any> => {
+  try {
+    const response = await instance.get("/products");
+    console.log(response);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
