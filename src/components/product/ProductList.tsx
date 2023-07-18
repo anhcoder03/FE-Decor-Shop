@@ -11,7 +11,7 @@ const ProductList = ({
 }) => {
   return (
     <>
-      {loading && products.length === 0 && (
+      {loading && (
         <div className="grid grid-cols-3 gap-30px pt-[30px]">
           {Array(9)
             .fill(0)
@@ -21,7 +21,8 @@ const ProductList = ({
         </div>
       )}
       <div className="grid grid-cols-3 gap-30px pt-[30px]">
-        {products !== null &&
+        {!loading &&
+          products !== null &&
           products.map((item) => (
             <ProductItem key={item._id} data={item}></ProductItem>
           ))}
