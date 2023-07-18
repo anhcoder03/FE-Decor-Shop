@@ -3,6 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Tproduct } from "../../types/product";
+import formatPrice from "../../utils/fomatPrice";
 
 const ProductItem = ({ data }: { data: Tproduct }) => {
   // if (!data) return;
@@ -12,7 +13,7 @@ const ProductItem = ({ data }: { data: Tproduct }) => {
       <div>
         <Link to={`/product/${data?.slug}`}>
           <img
-            className="rounded-lg"
+            className="rounded-lg h-[250px] mb-5"
             src={
               data?.image ||
               "https://cdn0.fahasa.com/media/catalog/product/i/m/image_179515_1.jpg"
@@ -25,8 +26,8 @@ const ProductItem = ({ data }: { data: Tproduct }) => {
         <a className="block text-center text-[15px] pb-[10px]">
           {data?.name || "Dapipus Toro"}{" "}
         </a>
-        <span className="font-bold text-center block text-[13px]">
-          {data?.price || "$189.10"}
+        <span className="font-bold text-center block text-[13px] text-red-500">
+          {formatPrice(data?.price) || "$189.10"}đ
         </span>
       </div>
     </div>

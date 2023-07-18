@@ -1,13 +1,27 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import Heading from "../common/Heading";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import ProductItem from "../product/ProductItem";
+import { useEffect, useState } from "react";
+import { Tproduct } from "../../types/product";
+import { getAllProduct } from "../../api/product";
 
 const LatestProducts = () => {
+  const [products, setProducts] = useState<Tproduct[]>([]);
+  useEffect(() => {
+    const getProducts = async () => {
+      const data = await getAllProduct(
+        "/products?categoryId=64b3af76955476a738ebb26f"
+      );
+      setProducts(data.data.product);
+    };
+    void getProducts();
+  }, []);
   return (
     <div>
-      <Heading className="mb-10">LATEST PRODUCTS</Heading>
+      <Heading className="mb-10">BÀN LÀM VIỆC</Heading>
       <div className="product-swiper">
         <Swiper
           spaceBetween={10}
@@ -33,13 +47,11 @@ const LatestProducts = () => {
             },
           }}
         >
-          {Array(10)
-            .fill(0)
-            .map((item, index) => (
-              <SwiperSlide className="grid grid-cols-5 gap-5 mb-10" key={index}>
-                <ProductItem></ProductItem>
-              </SwiperSlide>
-            ))}
+          {products?.map((item, index) => (
+            <SwiperSlide className="grid grid-cols-5 gap-5 mb-10" key={index}>
+              <ProductItem data={item} key={item._id}></ProductItem>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

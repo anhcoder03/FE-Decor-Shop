@@ -11,7 +11,7 @@ const ProductList = ({
 }) => {
   return (
     <>
-      {loading && (
+      {loading && products.length === 0 && (
         <div className="grid grid-cols-3 gap-30px pt-[30px]">
           {Array(9)
             .fill(0)
