@@ -10,15 +10,16 @@ import { Button } from "../../components/button";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createProduct } from "../../api/product";
+import { getOneProduct, putProduct } from "../../api/product";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DropdownCategory from "../../components/select/DropdownCategory";
 import { instance } from "../../api/instance";
-const ProductAdd = () => {
-  const [desc, setDesc] = useState<string>("");
+// import parse from 'html-react-parser';
+const ProductEdit = () => {
   const [category, setCategory] = useState([]);
-  const navigate = useNavigate();
+  const [desc, setDesc] = useState<string>("");
+  const [category_id, setCategory_id] = useState<any>()
   const schema = yup.object({
     name: yup.string().required("Phải nhập tên sản phẩm!"),
     price: yup.number().required("phải nhập giá sản phẩm"),
@@ -31,17 +32,19 @@ const ProductAdd = () => {
       toast.error(arrayError[0]?.message);
     }
   });
-  const {
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(schema),
-  });
-  console.log(errors);
-
+  const { id }: any = useParams<string>();
+  useEffect(() => {
+    getOneProduct(id).then(({ data }) => {
+      console.log(data);
+      setCategory_id(data?.product?.categoryId?._id)
+      reset(data?.product);
+      setValue("categoryId", data?.product?.categoryId?.name);
+      setDesc(data?.product?.desc);
+    });
+  }, [id]);
+  useEffect(() => {
+    handleGetCategories();
+  }, []);
   const handleGetCategories = async () => {
     try {
       const response: any = await instance.get("categories");
@@ -50,27 +53,34 @@ const ProductAdd = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    handleGetCategories()
-  }, [])
+  const navigate = useNavigate();
+
+  const {
+    handleSubmit,
+    control,
+    reset,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(schema),
+  });
+  console.log(errors);
+  console.log("category_id", category_id);
+  
 
   const handleSubmitProduct = async (values: any) => {
-    // console.log("values", { ...values, desc });
-    if(desc === "") {
-      toast.error("Nhập mô tả sản phẩm!")
-      return
-    }
+    if (!isValid) return;
+    console.log("values", values, desc);
     try {
-      const product = await createProduct({ ...values, desc });
+      const product = await putProduct({ ...values, desc });
       if (product) {
-        toast.success("Thêm sản phẩm thành công");
+        toast.success("cập nhật sản phẩm thành công");
         navigate("/manage/product");
       }
-    } catch (error : any) {
+    } catch (error: any) {
       toast.error(error.response.data.message);
     }
-
-    //  console.log("siuuuu", dataaaa);
   };
   return (
     <DashboardLayout>
@@ -111,14 +121,21 @@ const ProductAdd = () => {
             ></Input>
           </Field>
           <Field>
-            <Label htmlFor="categoryId">Danh mục</Label>
+            <Label htmlFor="category">Danh mục</Label>
             {/* <Input
               name="categoryId"
               placeholder="Enter product category"
               type="text"
               control={control}
             ></Input> */}
-            <DropdownCategory  control={control} name={"categoryId"} setValue={setValue} dropdownLabel="Phân loại danh mục" data={category}></DropdownCategory>
+            <DropdownCategory
+              control={control}
+              name={"categoryId"}
+              setValue={setValue}
+              dropdownLabel="Phân loại danh mục"
+              data={category}
+              category_id = {category_id}
+            ></DropdownCategory>
           </Field>
         </div>
         <div>
@@ -142,4 +159,4 @@ const ProductAdd = () => {
   );
 };
 
-export default ProductAdd;
+export default ProductEdit;
