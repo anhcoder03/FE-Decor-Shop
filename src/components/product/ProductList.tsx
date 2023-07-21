@@ -26,7 +26,7 @@ const ProductList = ({
           products.map((item) => (
             <ProductItem key={item._id} data={item}></ProductItem>
           ))}
-        {products.length === 0 && (
+        {!loading && products.length === 0 && (
           <div className="flex items-center justify-center">
             <span className="text-xl font-semibold text-primary">
               Không có sản phẩm nào 😇

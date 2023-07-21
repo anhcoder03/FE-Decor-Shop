@@ -17,18 +17,18 @@ const ResultSearch = ({
       {show && (
         <div>
           {loading && <LoadingSearch></LoadingSearch>}
-          {data.length > 0 ? (
-            data.map((item: Tproduct) => (
-              <Link to={`/product/${item.slug}`} key={item._id}>
-                <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-primary">
-                  <img className="w-[30px]" src={item.image} alt="" />
-                  <p>{item.name}</p>
-                </div>
-              </Link>
-            ))
-          ) : (
-            <div className="px-5 py-3">Không tìm thấy sản phẩm.</div>
-          )}
+          {data.length > 0
+            ? data.map((item: Tproduct) => (
+                <Link to={`/product/${item.slug}`} key={item._id}>
+                  <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-primary">
+                    <img className="w-[30px]" src={item.image} alt="" />
+                    <p>{item.name}</p>
+                  </div>
+                </Link>
+              ))
+            : !loading && (
+                <div className="px-5 py-3">Không tìm thấy sản phẩm.</div>
+              )}
         </div>
       )}
     </>
