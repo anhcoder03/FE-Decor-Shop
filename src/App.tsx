@@ -2,8 +2,11 @@ import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import LoadingPage from "./components/common/LoadingPage";
+
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
+const SignupPage = React.lazy(() => import("./pages/SignupPage"));
+const SigninPage = React.lazy(() => import("./pages/LoginPage"));
 const DashboardPage = React.lazy(() => import("./pages/admin/DashboardPage"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 const ProductEdit = React.lazy(() => import("./modules/product/ProductEdit"));
@@ -24,6 +27,8 @@ function App() {
     { path: "", element: <HomePage /> },
     { path: "product", element: <ProductPage /> },
     { path: "product/:slug", element: <ProductDetail /> },
+    { path: "signup", element: <SignupPage /> },
+    { path: "signin", element: <SigninPage /> },
     { path: "dashboard", element: <DashboardPage /> },
     { path: "manage/product", element: <ProductManage /> },
     { path: "manage/add-product", element: <ProductAdd /> },

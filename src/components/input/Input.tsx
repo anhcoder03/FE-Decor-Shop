@@ -6,6 +6,7 @@ interface IInputProps {
   name: string;
   placeholder: string;
   control: any;
+  className?: string;
 }
 
 const Input = ({
@@ -13,6 +14,7 @@ const Input = ({
   name = "",
   control,
   placeholder,
+  className = '',
 }: IInputProps) => {
   const { field } = useController<any>({
     name,
@@ -20,8 +22,7 @@ const Input = ({
     control,
     defaultValue: "",
   });
-  const styleInput =
-    "w-full bg-[#222222] rounded-lg font-medium border-transparent outline-none py-4 px-5";
+  const styleInput = `w-full bg-[#222222] rounded-lg font-medium border-transparent outline-none py-4 px-5 ${className}`;
   return (
     <input
       type={type}
