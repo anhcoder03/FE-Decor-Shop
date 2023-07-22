@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
 import { Table } from "../../components/table";
@@ -16,6 +16,8 @@ import { Tproduct } from "../../types/product";
 import ReactPaginate from "react-paginate";
 import formatPrice from "../../utils/fomatPrice";
 const ProductManage = () => {
+  const headings = ["STT", "Image", "Name", "Price", "Action"];
+  const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState([]);
   const [url, setUrl] = useState("/products");
   const [pageCount, setPageCount] = useState(0);
@@ -26,14 +28,16 @@ const ProductManage = () => {
     console.log(url);
   };
   useEffect(() => {
-    loadData();
+    void loadData();
   }, [url]);
 
-  const loadData = () => {
-    void getAllProduct(url).then(({ data }) => {
+  const loadData = async (): Promise<any> => {
+    setLoading(true);
+    void (await getAllProduct(url).then(({ data }) => {
       setProduct(data?.product);
       setPageCount(Math.ceil(data?.totalPage));
-    });
+      setLoading(false);
+    }));
   };
 
   const handleRemove = (id: any) => {
@@ -69,44 +73,33 @@ const ProductManage = () => {
           + Create Product
         </Button>
       </DashboardHeading>
-      <Table>
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Actions</th>
+      <Table headings={headings} loading={loading} length={product.length}>
+        {product?.map((item: Tproduct, index: number) => (
+          <tr key={index}>
+            <td>{index + 1}</td>
+            <td>
+              <img
+                src={item?.image}
+                alt={item?.name}
+                className="max-w-[70px] object-cover"
+              />
+            </td>
+            <td className="font-bold">{item?.name}</td>
+            <td>
+              <em className="text-red-500">{formatPrice(item?.price)} đ</em>
+            </td>
+            <td>
+              <div className="flex items-center gap-x-3 text-primary">
+                <IconEdit
+                  onClick={() => navigate(`/manage/edit-product/${item._id}`)}
+                ></IconEdit>
+                <IconDelete
+                  onClick={() => handleRemove(item?._id)}
+                ></IconDelete>
+              </div>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {product?.map((item: Tproduct, index: number) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>
-                <img
-                  src={item?.image}
-                  alt={item?.name}
-                  className="max-w-[70px] object-cover"
-                />
-              </td>
-              <td className="font-bold">{item?.name}</td>
-              <td>
-                <em className="text-red-500">{formatPrice(item?.price)} đ</em>
-              </td>
-              <td>
-                <div className="flex items-center gap-x-3 text-primary">
-                  <IconEdit
-                    onClick={() => navigate(`/manage/edit-product/${item._id}`)}
-                  ></IconEdit>
-                  <IconDelete
-                    onClick={() => handleRemove(item?._id)}
-                  ></IconDelete>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        ))}
       </Table>
       <div className="py-10">
         <ReactPaginate

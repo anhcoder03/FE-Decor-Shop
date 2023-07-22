@@ -17,15 +17,19 @@ interface ApiResponse {
 }
 
 const CategoryManage = () => {
+  const headings = ["STT", "Name", "Action"];
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [categories, setCategories] = useState<ICategory[]>([]);
 
   const handleGetCategories = async () => {
     try {
+      setLoading(true);
       const response: AxiosResponse<ApiResponse> = await instance.get(
         "categories"
       );
       setCategories(response.data.category);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -64,34 +68,23 @@ const CategoryManage = () => {
           + Create Category
         </Button>
       </DashboardHeading>
-      <Table>
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Name</th>
-            <th>Actions</th>
+      <Table loading={loading} headings={headings} length={categories.length}>
+        {categories.map((item, index) => (
+          <tr key={item._id}>
+            <td>{index + 1}</td>
+            <td className="font-bold">{item.name}</td>
+            <td>
+              <div className="flex items-center gap-x-3 text-primary">
+                <IconEdit
+                  onClick={() => navigate(`/manage/edit-category/${item._id}`)}
+                ></IconEdit>
+                <IconDelete
+                  onClick={() => handleDeleteCategory(item._id)}
+                ></IconDelete>
+              </div>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {categories.map((item, index) => (
-            <tr key={item._id}>
-              <td>{index + 1}</td>
-              <td className="font-bold">{item.name}</td>
-              <td>
-                <div className="flex items-center gap-x-3 text-primary">
-                  <IconEdit
-                    onClick={() =>
-                      navigate(`/manage/edit-category/${item._id}`)
-                    }
-                  ></IconEdit>
-                  <IconDelete
-                    onClick={() => handleDeleteCategory(item._id)}
-                  ></IconDelete>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        ))}
       </Table>
     </DashboardLayout>
   );
