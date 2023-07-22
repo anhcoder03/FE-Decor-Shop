@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
 import { Field } from "../../components/field";
@@ -21,9 +21,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DropdownCategory from "../../components/select/DropdownCategory";
 import { instance } from "../../api/instance";
 import { ImageUpload } from "../../components/image";
-import { uploadImage } from "../../api/upload";
 import useUploadImage from "../../hooks/useUploadImage";
-// import parse from 'html-react-parser';
 const ProductEdit = () => {
   const [category, setCategory] = useState([]);
   const [desc, setDesc] = useState<string>("");
@@ -72,7 +70,7 @@ const ProductEdit = () => {
     control,
     reset,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schema),
