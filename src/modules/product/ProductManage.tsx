@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -32,12 +33,16 @@ const ProductManage = () => {
   }, [url]);
 
   const loadData = async (): Promise<any> => {
-    setLoading(true);
-    void (await getAllProduct(url).then(({ data }) => {
-      setProduct(data?.product);
-      setPageCount(Math.ceil(data?.totalPage));
-      setLoading(false);
-    }));
+    try {
+      setLoading(true);
+      void (await getAllProduct(url).then(({ data }) => {
+        setProduct(data?.product);
+        setPageCount(Math.ceil(data?.totalPage));
+        setLoading(false);
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleRemove = (id: any) => {

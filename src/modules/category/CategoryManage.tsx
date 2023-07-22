@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/require-await */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
 import { Button } from "../../components/button";
@@ -7,36 +9,29 @@ import { IconDelete, IconEdit } from "../../components/icons";
 import { Table } from "../../components/table";
 import { instance } from "../../api/instance";
 import { ICategory } from "../../types/Category";
-import { AxiosResponse } from "axios";
 import Swal from "sweetalert2";
-import { useNavigate, useParams } from "react-router-dom";
-
-interface ApiResponse {
-  message: string;
-  category: ICategory[];
-}
+import { useNavigate } from "react-router-dom";
+import { getAllCategory } from "../../api/category";
 
 const CategoryManage = () => {
   const headings = ["STT", "Name", "Action"];
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [categories, setCategories] = useState<ICategory[]>([]);
+  useEffect(() => {
+    void loadData();
+  }, []);
 
-  const handleGetCategories = async () => {
+  const loadData = async (): Promise<any> => {
     try {
       setLoading(true);
-      const response: AxiosResponse<ApiResponse> = await instance.get(
-        "categories"
-      );
+      const response = await getAllCategory();
       setCategories(response.data.category);
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    void handleGetCategories();
-  }, []);
 
   const handleDeleteCategory = (id: string) => {
     console.log(id);
@@ -52,7 +47,7 @@ const CategoryManage = () => {
       if (result.isConfirmed) {
         try {
           await instance.delete(`/categories/${id}`);
-          void handleGetCategories();
+          void loadData();
           void Swal.fire("Deleted!", "Your file has been deleted.", "success");
         } catch (error) {
           console.log(error);
