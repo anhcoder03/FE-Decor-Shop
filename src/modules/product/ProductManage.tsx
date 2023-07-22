@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Tproduct } from "../../types/product";
 import ReactPaginate from "react-paginate";
+import formatPrice from "../../utils/fomatPrice";
 const ProductManage = () => {
   const [product, setProduct] = useState([]);
   const [url, setUrl] = useState("/products");
@@ -85,13 +86,13 @@ const ProductManage = () => {
               <td>
                 <img
                   src={item?.image}
-                  alt=""
+                  alt={item?.name}
                   className="max-w-[70px] object-cover"
                 />
               </td>
               <td className="font-bold">{item?.name}</td>
               <td>
-                <em className="text-red-500">{item?.price} đ</em>
+                <em className="text-red-500">{formatPrice(item?.price)} đ</em>
               </td>
               <td>
                 <div className="flex items-center gap-x-3 text-primary">

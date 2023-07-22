@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { useState, useEffect } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
 import { Field } from "../../components/field";
@@ -15,6 +20,9 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DropdownCategory from "../../components/select/DropdownCategory";
 import { instance } from "../../api/instance";
+import { Tproduct } from "../../types/product";
+import { ImageUpload } from "../../components/image";
+import useUploadImage from "../../hooks/useUploadImage";
 const ProductAdd = () => {
   const [desc, setDesc] = useState<string>("");
   const [category, setCategory] = useState([]);
@@ -22,7 +30,6 @@ const ProductAdd = () => {
   const schema = yup.object({
     name: yup.string().required("Phải nhập tên sản phẩm!"),
     price: yup.number().required("phải nhập giá sản phẩm"),
-    image: yup.string().required("phải nhập ảnh sản phẩm"),
     categoryId: yup.string().required("phải chọn danh mục cho sản phẩm!!"),
   });
   useEffect(() => {
@@ -40,7 +47,6 @@ const ProductAdd = () => {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  console.log(errors);
 
   const handleGetCategories = async () => {
     try {
@@ -51,27 +57,31 @@ const ProductAdd = () => {
     }
   };
   useEffect(() => {
-    handleGetCategories()
-  }, [])
+    void handleGetCategories();
+  }, []);
+  const { image, handleDeleteImage, handleSelectImage, loading } =
+    useUploadImage();
 
-  const handleSubmitProduct = async (values: any) => {
-    // console.log("values", { ...values, desc });
-    if(desc === "") {
-      toast.error("Nhập mô tả sản phẩm!")
-      return
+  const handleSubmitProduct: any = async (values: Tproduct) => {
+    if (desc === "") {
+      toast.error("Nhập mô tả sản phẩm!");
+      return;
+    }
+    if (image === "") {
+      toast.error("Chọn ảnh cho sản phẩm!");
+      return;
     }
     try {
-      const product = await createProduct({ ...values, desc });
+      const product = await createProduct({ ...values, desc, image });
       if (product) {
         toast.success("Thêm sản phẩm thành công");
         navigate("/manage/product");
       }
-    } catch (error : any) {
+    } catch (error: any) {
       toast.error(error.response.data.message);
     }
-
-    //  console.log("siuuuu", dataaaa);
   };
+
   return (
     <DashboardLayout>
       <DashboardHeading
@@ -103,22 +113,23 @@ const ProductAdd = () => {
         <div className="form-layout">
           <Field>
             <Label htmlFor="image">Image</Label>
-            <Input
+            <ImageUpload
+              loading={loading}
+              onChange={handleSelectImage}
+              handleDeleteImage={handleDeleteImage}
               name="image"
-              placeholder="Enter product image"
-              type="text"
-              control={control}
-            ></Input>
+              image={image}
+            ></ImageUpload>
           </Field>
           <Field>
             <Label htmlFor="categoryId">Danh mục</Label>
-            {/* <Input
-              name="categoryId"
-              placeholder="Enter product category"
-              type="text"
+            <DropdownCategory
               control={control}
-            ></Input> */}
-            <DropdownCategory  control={control} name={"categoryId"} setValue={setValue} dropdownLabel="Phân loại danh mục" data={category}></DropdownCategory>
+              name={"categoryId"}
+              setValue={setValue}
+              dropdownLabel="Phân loại danh mục"
+              data={category}
+            ></DropdownCategory>
           </Field>
         </div>
         <div>
