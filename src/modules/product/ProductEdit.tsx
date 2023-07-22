@@ -32,7 +32,6 @@ const ProductEdit = () => {
   const schema = yup.object({
     name: yup.string().required("Phải nhập tên sản phẩm!"),
     price: yup.number().required("phải nhập giá sản phẩm"),
-    image: yup.string().required("phải nhập ảnh sản phẩm"),
     categoryId: yup.string().required("phải chọn danh mục cho sản phẩm!!"),
   });
   useEffect(() => {
@@ -77,6 +76,14 @@ const ProductEdit = () => {
   });
 
   const handleSubmitProduct = async (values: any) => {
+    if (image === "") {
+      toast.error("Chọn ảnh cho sản phẩm!");
+      return;
+    }
+    if (desc === "") {
+      toast.error("Nhập mô tả sản phẩm!");
+      return;
+    }
     try {
       const product = await putProduct({ ...values, desc, image });
       if (product) {
@@ -117,23 +124,6 @@ const ProductEdit = () => {
         </div>
         <div className="form-layout">
           <Field>
-            <Label htmlFor="image">Image</Label>
-            {/* <Input
-              name="image"
-              placeholder="Enter product image"
-              type="text"
-              control={control}
-            ></Input> */}
-
-            <ImageUpload
-              loading={loading}
-              onChange={handleSelectImage}
-              handleDeleteImage={handleDeleteImage}
-              name="image"
-              image={image}
-            ></ImageUpload>
-          </Field>
-          <Field>
             <Label htmlFor="category">Danh mục</Label>
             <DropdownCategory
               control={control}
@@ -142,6 +132,16 @@ const ProductEdit = () => {
               dropdownLabel={categoryName}
               data={category}
             ></DropdownCategory>
+          </Field>
+          <Field>
+            <Label htmlFor="image">Image</Label>
+            <ImageUpload
+              loading={loading}
+              onChange={handleSelectImage}
+              handleDeleteImage={handleDeleteImage}
+              name="image"
+              image={image}
+            ></ImageUpload>
           </Field>
         </div>
         <div>

@@ -6,8 +6,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { IconSearch } from "../icons";
-import LoadingSearch from "../common/LoadingSearch";
-import { Tproduct } from "../../types/product";
 import { searchProduct } from "../../api/product";
 import ResultSearch from "../search/ResultSearch";
 import useClickOutSide from "../../hooks/useClickOutSIde";

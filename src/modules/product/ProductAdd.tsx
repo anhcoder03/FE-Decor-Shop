@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -63,12 +64,12 @@ const ProductAdd = () => {
     useUploadImage();
 
   const handleSubmitProduct: any = async (values: Tproduct) => {
-    if (desc === "") {
-      toast.error("Nhập mô tả sản phẩm!");
-      return;
-    }
     if (image === "") {
       toast.error("Chọn ảnh cho sản phẩm!");
+      return;
+    }
+    if (desc === "") {
+      toast.error("Nhập mô tả sản phẩm!");
       return;
     }
     try {
@@ -112,16 +113,6 @@ const ProductAdd = () => {
         </div>
         <div className="form-layout">
           <Field>
-            <Label htmlFor="image">Image</Label>
-            <ImageUpload
-              loading={loading}
-              onChange={handleSelectImage}
-              handleDeleteImage={handleDeleteImage}
-              name="image"
-              image={image}
-            ></ImageUpload>
-          </Field>
-          <Field>
             <Label htmlFor="categoryId">Danh mục</Label>
             <DropdownCategory
               control={control}
@@ -130,6 +121,16 @@ const ProductAdd = () => {
               dropdownLabel="Phân loại danh mục"
               data={category}
             ></DropdownCategory>
+          </Field>
+          <Field>
+            <Label htmlFor="image">Image</Label>
+            <ImageUpload
+              loading={loading}
+              onChange={handleSelectImage}
+              handleDeleteImage={handleDeleteImage}
+              name="image"
+              image={image}
+            ></ImageUpload>
           </Field>
         </div>
         <div>
