@@ -5,10 +5,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useEffect, useState } from "react";
-import ProductItem from "./ProductItem";
+// import ProductItem from "./ProductItem";
 import ProductListHeading from "./ProductListHeading";
 import ProductFilterPrice from "./ProductFilterPrice";
-import ProductCategoryList from "./ProductCategoryList";
+// import ProductCategoryList from "./ProductCategoryList";
 import ProductList from "./ProductList";
 import ProductDetailHeader from "../../modules/productDetail/ProductDetailHeader";
 import { ICategory } from "../../types/Category";

@@ -5,12 +5,12 @@ import { LayoutMain } from "../components/layout";
 import ProductDetailHeader from "../modules/productDetail/ProductDetailHeader";
 import ProductDetailDescription from "../modules/productDetail/ProductDetailDescription";
 import { useParams } from "react-router-dom";
-import { getOneProduct, getProductWithSlug } from "../api/product";
+import { getProductWithSlug } from "../api/product";
 import { Tproduct } from "../types/product";
-import { IconStar } from "../components/icons";
+// import { IconStar } from "../components/icons";
 import ProductPrice from "../components/product/ProductPrice";
 import ProductImage from "../components/product/ProductImage";
-
+import ProductCategory from "../components/homepage/ProductCategory"
 const ProductDetail = () => {
   const { slug } = useParams<string>();
   const [dataDetail, setDataDetail] = useState<Tproduct>();
@@ -21,7 +21,8 @@ const ProductDetail = () => {
     }
     void getDataProduct();
   }, [slug]);
-
+  console.log("dataDetail", dataDetail);
+  
   return (
     <LayoutMain>
       <ProductDetailHeader
@@ -29,7 +30,7 @@ const ProductDetail = () => {
       ></ProductDetailHeader>
       <section>
         <div className="relative mx-auto max-w-[1280px] py-8">
-          <div className="grid items-start grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="grid items-start grid-cols-1 gap-8 md:grid-cols-2" style={{maxHeight: 400}}>
             <ProductImage
               image={dataDetail?.image}
               name={dataDetail?.name}
@@ -38,22 +39,23 @@ const ProductDetail = () => {
               <strong className="rounded-lg bg-[#222222] px-3 py-0.5 text-xs font-medium tracking-wide text-primary">
                 Pre Order
               </strong>
-              <div className="flex justify-between mt-8">
+              <div className=" justify-between mt-8">
                 <div className="max-w-[35ch] space-y-2">
                   <h1 className="text-xl font-bold sm:text-2xl">
                     {dataDetail?.name || ""}
                   </h1>
                   <p className="text-sm">Highest Rated Product</p>
-                  <div className="-ms-0.5 flex">
+                  {/* <div className="-ms-0.5 flex">
                     {Array(5)
                       .fill(0)
-                      .map((item, index) => (
+                      .map((index) => (
                         <IconStar key={index}></IconStar>
                       ))}
-                  </div>
+                  </div> */}
                 </div>
                 <ProductPrice price={dataDetail?.price}></ProductPrice>
               </div>
+              {/* <div style={{marginTop: 20}}>{parse(dataDetail?.desc || "")}</div> */}
               <form className="mt-8">
                 <div className="flex gap-4 mt-8">
                   <div>
@@ -85,8 +87,11 @@ const ProductDetail = () => {
       <ProductDetailDescription
         description={dataDetail?.desc || ""}
       ></ProductDetailDescription>
+      <ProductCategory  categoryId = {dataDetail?.categoryId} id = {dataDetail?._id}/>
     </LayoutMain>
   );
 };
+
+
 
 export default ProductDetail;
