@@ -19,7 +19,6 @@ const DropdownCategory = ({
     name: "categoryId",
     defaultValue: "",
   });
-  console.log("dropdownValue", dropdownValue);
   const handleClickDropdownItem = (e: any) => {
     setValue(name, e.target.dataset.value);
     setShow(false);
@@ -45,7 +44,7 @@ const DropdownCategory = ({
       >
         {data.map((item: any) => (
           <div
-            className="py-4 px-5 cursor-pointer hover:bg-primary rounded-lg"
+            className="px-5 py-4 rounded-lg cursor-pointer hover:bg-primary"
             onClick={handleClickDropdownItem}
             data-value={item._id}
             key={item._id}

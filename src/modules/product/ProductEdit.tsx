@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -19,11 +20,16 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import DropdownCategory from "../../components/select/DropdownCategory";
 import { instance } from "../../api/instance";
+import { ImageUpload } from "../../components/image";
+import { uploadImage } from "../../api/upload";
+import useUploadImage from "../../hooks/useUploadImage";
 // import parse from 'html-react-parser';
 const ProductEdit = () => {
   const [category, setCategory] = useState([]);
   const [desc, setDesc] = useState<string>("");
   const [categoryName, setCategoryName] = useState<string>();
+  const { image, handleDeleteImage, handleSelectImage, loading, setImage } =
+    useUploadImage();
 
   const schema = yup.object({
     name: yup.string().required("Phải nhập tên sản phẩm!"),
@@ -45,6 +51,7 @@ const ProductEdit = () => {
       reset(data?.product);
       setValue("categoryId", data?.product?.categoryId?._id);
       setDesc(data?.product?.desc);
+      setImage(data?.product?.image);
     });
   }, [id]);
   useEffect(() => {
@@ -70,11 +77,10 @@ const ProductEdit = () => {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  console.log(errors);
 
   const handleSubmitProduct = async (values: any) => {
     try {
-      const product = await putProduct({ ...values, desc });
+      const product = await putProduct({ ...values, desc, image });
       if (product) {
         toast.success("cập nhật sản phẩm thành công");
         navigate("/manage/product");
@@ -114,12 +120,20 @@ const ProductEdit = () => {
         <div className="form-layout">
           <Field>
             <Label htmlFor="image">Image</Label>
-            <Input
+            {/* <Input
               name="image"
               placeholder="Enter product image"
               type="text"
               control={control}
-            ></Input>
+            ></Input> */}
+
+            <ImageUpload
+              loading={loading}
+              onChange={handleSelectImage}
+              handleDeleteImage={handleDeleteImage}
+              name="image"
+              image={image}
+            ></ImageUpload>
           </Field>
           <Field>
             <Label htmlFor="category">Danh mục</Label>
