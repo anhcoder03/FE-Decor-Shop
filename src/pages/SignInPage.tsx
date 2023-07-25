@@ -1,22 +1,23 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from "react";
-import { Input } from "../components/input";
-import { useForm } from "react-hook-form";
-import IconGoogle from "./../components/icons/IconGoogle";
-import { Button } from "../components/button";
-import { IUser } from "../types/User";
-import { createUser } from "../api/auth";
-import { toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field } from "../components/field";
+import { useForm } from "react-hook-form";
 import { IconEyeClose, IconEyeOpen } from "../components/icons";
 import { useNavigate } from "react-router-dom";
+import { Input } from "../components/input";
+import { Button } from "../components/button";
+import IconGoogle from "../components/icons/IconGoogle";
+import { IUser } from "../types/User";
+import { useDispatch, useSelector } from "react-redux";
+import { handleLogin } from "../store/auth/handler";
+import { RootState } from "../store/configureStore";
 
 const shema = yup.object({
-  name: yup.string().required("* Trường này không được để trống!"),
   email: yup
     .string()
     .required("* Trường này không được để trống!")
@@ -24,9 +25,11 @@ const shema = yup.object({
   password: yup.string().required("* Trường này không được để trống!"),
 });
 
-const SignupPage = () => {
+const SignInPage = () => {
   const [togglePassword, setTogglePassword] = useState(false);
+  // const { auth, error } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -35,51 +38,35 @@ const SignupPage = () => {
     mode: "onBlur",
     resolver: yupResolver(shema),
   });
-
-  const handleRegisterUser = async (values: IUser) => {
-    console.log(values);
+  const handleSignIn = async (values: {
+    username: string;
+    password: string;
+  }) => {
     try {
-      const response: any = await createUser(values);
-      toast.success(response.data.message);
-      navigate("/signin");
-    } catch (error: any) {
-      toast.error(error.response.data.message);
+      const { payload }: any = await dispatch(handleLogin(values) as any);
+      if (payload?.user) {
+        navigate("/");
+      }
+    } catch (error) {
       console.log(error);
     }
   };
-  console.log(errors);
 
   return (
     <section className="bg-[#2d2c2c] min-h-screen flex items-center justify-center">
       <div className="bg-[#DBA87F] flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
         <div className="px-8 md:w-1/2 md:px-8">
-          <h2 className="text-2xl font-bold text-white">Signup</h2>
+          <h2 className="text-2xl font-bold text-white">Login</h2>
           <p className="mt-4 text-xs text-white">
             If you are already a member, easily log in
           </p>
 
           <form
             action=""
-            className="flex flex-col"
-            onSubmit={handleSubmit(handleRegisterUser)}
+            className="flex flex-col mt-10"
+            onSubmit={handleSubmit(handleSignIn)}
             autoComplete="false"
           >
-            <Field>
-              <div className="flex flex-col w-full gap-y-2">
-                <Input
-                  type="name"
-                  name="name"
-                  placeholder="Name"
-                  control={control}
-                  className={
-                    "  h-12 mt-8 rounded-xl border bg-white text-[#111111]"
-                  }
-                ></Input>
-                <div className="text-sm text-red-500">
-                  {errors.name && errors.name.message}
-                </div>
-              </div>
-            </Field>
             <Field>
               <div className="flex flex-col w-full gap-y-2">
                 <Input
@@ -130,7 +117,7 @@ const SignupPage = () => {
               isLoading={isSubmitting}
               className="mx-auto w-full  h-12 !bg-[#222222]"
             >
-              Signup
+              Login
             </Button>
           </form>
 
@@ -155,9 +142,9 @@ const SignupPage = () => {
             <Button
               type="button"
               className={"bg-white px-0 w-[100px] h-[40px] duration-300 "}
-              to="/signin"
+              to="/signup"
             >
-              <span className="text-primary"> Login</span>
+              <span className="text-primary"> Register</span>
             </Button>
           </div>
         </div>
@@ -173,4 +160,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SignInPage;

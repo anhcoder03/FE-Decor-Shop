@@ -1,14 +1,31 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useEffect } from "react";
 import DashboardHeader from "./DashboardHeader";
 import DashboardSidebar from "./DashboardSidebar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { RootState } from "../../store/configureStore";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 interface IDashboardLayoutProps {
   children: React.ReactNode;
 }
 
 const DashboardLayout = ({ children }: IDashboardLayoutProps) => {
+  const { user }: any = useSelector((state: RootState) => state.auth.auth);
   const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user) {
+      navigate("/signin");
+      toast.warning("Đăng nhập để vào trang quản trị!");
+    }
+    if (!user?.admin) {
+      navigate("/");
+      toast.warning("Tài khoản của bạn không phải là người quản trị");
+    }
+  }, [user]);
+
   useEffect(() => {
     if (!location.hash) {
       window.scrollTo(0, 0);
