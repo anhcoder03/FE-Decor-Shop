@@ -9,11 +9,14 @@ import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
-import { store } from "./store/configureStore.ts";
+import persistor, { store } from "./store/configureStore.ts";
+import { PersistGate } from "redux-persist/integration/react";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-    <App />
-    <ToastContainer />
+    <PersistGate persistor={persistor}>
+      <App />
+      <ToastContainer />
+    </PersistGate>
   </Provider>
 );

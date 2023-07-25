@@ -20,7 +20,7 @@ const Button = ({
   children,
   className = "",
 }: IButtonProps) => {
-  const styleButton = `${className} flex items-center justify-center px-6 text-base font-semibold leading-4 text-white disabled:opacity-50 disabled:pointer-events-none bg-primary rounded-xl`;
+  const styleButton = ` flex items-center justify-center px-6 py-2 text-base font-semibold leading-4 text-white disabled:opacity-50 disabled:pointer-events-none bg-primary rounded-xl ${className}`;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const child: string | React.ReactNode = isLoading ? (

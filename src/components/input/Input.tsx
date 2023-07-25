@@ -7,6 +7,7 @@ interface IInputProps {
   placeholder: string;
   control: any;
   className?: string;
+  children?: React.ReactNode;
 }
 
 const Input = ({
@@ -14,7 +15,8 @@ const Input = ({
   name = "",
   control,
   placeholder,
-  className = '',
+  className = "",
+  children,
 }: IInputProps) => {
   const { field } = useController<any>({
     name,
@@ -22,15 +24,18 @@ const Input = ({
     control,
     defaultValue: "",
   });
-  const styleInput = `w-full bg-[#222222] rounded-lg font-medium border-transparent outline-none py-4 px-5 ${className}`;
+  const styleInput = `w-full bg-[#222222] rounded-lg font-medium border-transparent outline-none   py-4 px-5 ${className}`;
   return (
-    <input
-      type={type}
-      id={name}
-      placeholder={placeholder}
-      className={styleInput}
-      {...field}
-    />
+    <div className="relative">
+      <input
+        type={type}
+        id={name}
+        placeholder={placeholder}
+        className={styleInput}
+        {...field}
+      />
+      {children ? <div className="input-icon"> {children} </div> : null}
+    </div>
   );
 };
 

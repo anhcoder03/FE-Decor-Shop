@@ -6,7 +6,7 @@ import LoadingPage from "./components/common/LoadingPage";
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
 const SignupPage = React.lazy(() => import("./pages/SignupPage"));
-const SigninPage = React.lazy(() => import("./pages/LoginPage"));
+const SigninPage = React.lazy(() => import("./pages/SignInPage"));
 const DashboardPage = React.lazy(() => import("./pages/admin/DashboardPage"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 const ProductEdit = React.lazy(() => import("./modules/product/ProductEdit"));

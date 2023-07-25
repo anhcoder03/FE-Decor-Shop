@@ -57,6 +57,13 @@
   width: 1px;
   white-space: nowrap;
 }
+.input-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
 
 .swiper-button-prev,
 .swiper-button-next {
