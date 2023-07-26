@@ -5,6 +5,7 @@ import LoadingPage from "./components/common/LoadingPage";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
+const CartPage = React.lazy(() => import("./pages/CartPage"));
 const SignupPage = React.lazy(() => import("./pages/SignupPage"));
 const SigninPage = React.lazy(() => import("./pages/SignInPage"));
 const DashboardPage = React.lazy(() => import("./pages/admin/DashboardPage"));
@@ -29,6 +30,7 @@ function App() {
     { path: "product/:slug", element: <ProductDetail /> },
     { path: "signup", element: <SignupPage /> },
     { path: "signin", element: <SigninPage /> },
+    { path: "cart", element: <CartPage /> },
     { path: "dashboard", element: <DashboardPage /> },
     { path: "manage/product", element: <ProductManage /> },
     { path: "manage/add-product", element: <ProductAdd /> },
