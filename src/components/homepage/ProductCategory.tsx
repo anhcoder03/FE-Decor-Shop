@@ -66,7 +66,7 @@ const ProductCategory = (props: any) => {
           >
             {Array(9)
               .fill(0)
-              .map((items, index) => (
+              .map((_items, index) => (
                 <SwiperSlide
                   className="grid grid-cols-5 gap-5 mb-10"
                   key={index}
