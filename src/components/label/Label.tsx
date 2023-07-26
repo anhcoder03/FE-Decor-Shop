@@ -1,5 +1,3 @@
-import React from "react";
-
 interface ILabelProps {
   children: string;
   htmlFor?: string;
