@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from "react";
 import * as yup from "yup";
@@ -12,10 +13,14 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "../components/input";
 import { Button } from "../components/button";
 import IconGoogle from "../components/icons/IconGoogle";
-import { IUser } from "../types/User";
-import { useDispatch, useSelector } from "react-redux";
-import { handleLogin } from "../store/auth/handler";
-import { RootState } from "../store/configureStore";
+import { useDispatch } from "react-redux";
+import { TDataResponse, handleLogin } from "../store/auth/handler";
+import { toast } from "react-toastify";
+
+type FormDataType = {
+  email: string;
+  password: string;
+};
 
 const shema = yup.object({
   email: yup
@@ -27,28 +32,27 @@ const shema = yup.object({
 
 const SignInPage = () => {
   const [togglePassword, setTogglePassword] = useState(false);
-  // const { auth, error } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<IUser | any>({
+  } = useForm<FormDataType>({
     mode: "onBlur",
     resolver: yupResolver(shema),
   });
-  const handleSignIn = async (values: {
-    username: string;
-    password: string;
-  }) => {
+  const handleSignIn = async (values: FormDataType) => {
     try {
-      const { payload }: any = await dispatch(handleLogin(values) as any);
-      if (payload?.user) {
+      const response: TDataResponse = await dispatch(
+        handleLogin(values) as any
+      ).unwrap();
+      toast.success(response?.message);
+      if (response?.user) {
         navigate("/");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 

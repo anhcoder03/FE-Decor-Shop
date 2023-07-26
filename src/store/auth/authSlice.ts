@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import { createSlice } from "@reduxjs/toolkit";
 import { handleLogin } from "./handler";
 import { IUser } from "../../types/User";

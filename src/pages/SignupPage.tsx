@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { useState } from "react";
 import { Input } from "../components/input";
 import { useForm } from "react-hook-form";
 import IconGoogle from "./../components/icons/IconGoogle";
 import { Button } from "../components/button";
-import { IUser } from "../types/User";
 import { createUser } from "../api/auth";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -14,6 +13,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Field } from "../components/field";
 import { IconEyeClose, IconEyeOpen } from "../components/icons";
 import { useNavigate } from "react-router-dom";
+
+interface formData {
+  name: string;
+  email: string;
+  password: string;
+}
+type DataResponse = {
+  data: {
+    message: string;
+  };
+};
 
 const shema = yup.object({
   name: yup.string().required("* Trường này không được để trống!"),
@@ -31,15 +41,14 @@ const SignupPage = () => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<IUser | any>({
+  } = useForm<formData>({
     mode: "onBlur",
-    resolver: yupResolver(shema),
+    resolver: yupResolver<any>(shema),
   });
 
-  const handleRegisterUser = async (values: IUser) => {
-    console.log(values);
+  const handleRegisterUser = async (values: formData) => {
     try {
-      const response: any = await createUser(values);
+      const response: DataResponse = await createUser(values);
       toast.success(response.data.message);
       navigate("/signin");
     } catch (error: any) {
@@ -47,7 +56,6 @@ const SignupPage = () => {
       console.log(error);
     }
   };
-  console.log(errors);
 
   return (
     <section className="bg-[#2d2c2c] min-h-screen flex items-center justify-center">

@@ -35,11 +35,13 @@ const Header = () => {
   }, [auth]);
   return (
     <div className="container flex items-center justify-between py-[30px] border-b border-b-[#ffffff]">
-      <Link to="">
-        <img src="/logo.png" alt="" />
-      </Link>
-      <div>
-        <InputSearch></InputSearch>
+      <div className="flex items-center gap-x-12">
+        <Link to="/">
+          <img src="/logo.png" alt="" />
+        </Link>
+        <div>
+          <InputSearch></InputSearch>
+        </div>
       </div>
       <div className="flex items-center gap-[50px]">
         {!auth?.user?.name ? (
@@ -54,11 +56,11 @@ const Header = () => {
                 setShow(!show);
               }}
             >
-              <span>Xin chào:</span>
-              <span className="text-primary">{auth?.user?.name}</span>
+              <span className="text-sm">Xin chào:</span>
+              <span className="text-sm text-primary">{auth?.user?.name}</span>
             </div>
             <div
-              className={`absolute  flex-col gap-y-3 top-[30px] transition-all bg-[#222222] z-10 p-3 w-full rounded-md action-user ${
+              className={`absolute text-sm  flex-col gap-y-3 top-[30px] transition-all bg-[#222222] z-10 p-3 w-full rounded-md action-user ${
                 show ? "flex" : "hidden"
               }`}
             >
@@ -93,7 +95,9 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-x-2">
             <span>My Cart</span>
-            <span>{totalAmount ? formatPrice(totalAmount) : 0}đ</span>
+            <span className="text-sm text-[#aaaaaa]">
+              {totalAmount ? formatPrice(totalAmount) : 0}đ
+            </span>
           </div>
         </div>
       </div>

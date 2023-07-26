@@ -27,16 +27,16 @@ const TopRateProduct = () => {
         {!products.length && (
           <Swiper
             spaceBetween={10}
-            slidesPerView={2}
+            slidesPerView={5}
             modules={[Navigation]}
             loop={true}
             navigation
             breakpoints={{
               1440: {
-                slidesPerView: 5,
+                slidesPerView: 6,
               },
               970: {
-                slidesPerView: 4,
+                slidesPerView: 5,
               },
               768: {
                 slidesPerView: 4,
@@ -64,16 +64,16 @@ const TopRateProduct = () => {
         {products.length > 0 && (
           <Swiper
             spaceBetween={10}
-            slidesPerView={2}
+            slidesPerView={5}
             modules={[Navigation]}
             loop={true}
             navigation
             breakpoints={{
               1440: {
-                slidesPerView: 5,
+                slidesPerView: 6,
               },
               970: {
-                slidesPerView: 4,
+                slidesPerView: 5,
               },
               768: {
                 slidesPerView: 4,

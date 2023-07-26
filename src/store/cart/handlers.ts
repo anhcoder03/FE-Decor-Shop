@@ -8,11 +8,10 @@ import { getCart } from "../../api/cart";
 import { dataResponse } from "./cartSlice";
 
 export const handleGetCart = createAsyncThunk<dataResponse, { userId: any }>(
-  "cart/getAll",
+  "cart/getAll ",
   async (userId: any) => {
     try {
       const response: any = await getCart(userId);
-      console.log(response);
       return response.data as dataResponse;
     } catch (error: any) {
       throw new Error(error.response.data.message);

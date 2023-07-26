@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ICart } from "../../types/Cart";
 import { handleGetCart } from "./handlers";
 import { Tproduct } from "../../types/product";
-// import { handAddToCart } from "./handlers";
 
 export type dataResponse = {
   message?: string;

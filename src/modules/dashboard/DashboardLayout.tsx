@@ -12,19 +12,21 @@ interface IDashboardLayoutProps {
 }
 
 const DashboardLayout = ({ children }: IDashboardLayoutProps) => {
-  const { user }: any = useSelector((state: RootState) => state.auth.auth);
+  const auth: any = useSelector((state: RootState) => state.auth.auth);
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user) {
+    if (!auth?.user) {
       navigate("/signin");
       toast.warning("Đăng nhập để vào trang quản trị!");
+      return;
     }
-    if (!user?.admin) {
+    if (!auth?.user.admin) {
       navigate("/");
       toast.warning("Tài khoản của bạn không phải là người quản trị");
+      return;
     }
-  }, [user]);
+  }, [auth]);
 
   useEffect(() => {
     if (!location.hash) {

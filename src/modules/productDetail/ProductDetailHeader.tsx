@@ -1,7 +1,7 @@
 import React from "react";
 import IconHome from "../../components/icons/iconHome";
 import { Link } from "react-router-dom";
-const ProductDetailHeader = ({ nameProduct }: { nameProduct: string }) => {
+const ProductDetailHeader = ({ nameProduct }: { nameProduct?: string }) => {
   return (
     <div>
       <div>
