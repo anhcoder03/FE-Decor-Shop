@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Link, useNavigate } from "react-router-dom";
@@ -8,17 +9,30 @@ import { RootState } from "../../store/configureStore";
 import useClickOutSide from "../../hooks/useClickOutSIde";
 import { authLogout } from "../../store/auth/authSlice";
 import { toast } from "react-toastify";
+import { resetCart } from "../../store/cart/cartSlice";
+import { useEffect } from "react";
+import { handleGetCart } from "../../store/cart/handlers";
+import formatPrice from "../../utils/fomatPrice";
 
 const Header = () => {
-  const { user }: any = useSelector((state: RootState) => state.auth.auth);
+  const auth: any = useSelector((state: RootState) => state.auth.auth);
+  const { totalAmount, quantity } = useSelector(
+    (state: RootState) => state.cart
+  );
   const { show, setShow, nodeRef } = useClickOutSide(".action-user");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(authLogout());
+    dispatch(resetCart());
     toast.success("Đăng xuất thành công!");
     navigate("/signin");
   };
+  useEffect(() => {
+    if (auth?.user._id) {
+      dispatch(handleGetCart(auth?.user._id) as any);
+    }
+  }, [auth]);
   return (
     <div className="container flex items-center justify-between py-[30px] border-b border-b-[#ffffff]">
       <Link to="">
@@ -28,7 +42,7 @@ const Header = () => {
         <InputSearch></InputSearch>
       </div>
       <div className="flex items-center gap-[50px]">
-        {!user?.name ? (
+        {!auth?.user?.name ? (
           <Link to={"/signin"}>
             <IconUser></IconUser>
           </Link>
@@ -41,14 +55,14 @@ const Header = () => {
               }}
             >
               <span>Xin chào:</span>
-              <span className="text-primary">{user?.name}</span>
+              <span className="text-primary">{auth?.user?.name}</span>
             </div>
             <div
               className={`absolute  flex-col gap-y-3 top-[30px] transition-all bg-[#222222] z-10 p-3 w-full rounded-md action-user ${
                 show ? "flex" : "hidden"
               }`}
             >
-              {user?.admin && (
+              {auth?.user?.admin && (
                 <Link to={"/dashboard"} className="hover:text-primary">
                   Dashboard
                 </Link>
@@ -70,14 +84,16 @@ const Header = () => {
         )}
         <div className="flex items-center gap-4">
           <div className="relative">
-            <IconCart></IconCart>
+            <Link to="/cart">
+              <IconCart></IconCart>
+            </Link>
             <span className="absolute flex items-center justify-center w-5 h-5 rounded-full -right-3 -top-3 bg-primary">
-              0
+              {quantity ? quantity : 0}
             </span>
           </div>
           <div className="flex items-center gap-x-2">
             <span>My Cart</span>
-            <span>($00,0)</span>
+            <span>{totalAmount ? formatPrice(totalAmount) : 0}đ</span>
           </div>
         </div>
       </div>

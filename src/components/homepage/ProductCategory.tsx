@@ -11,28 +11,32 @@ import CardSkeleton from "../common/CardSkeleton";
 
 const ProductCategory = (props: any) => {
   const [products, setProducts] = useState<Tproduct[]>([]);
-  const { categoryId, id} = props
+  const { categoryId, id } = props;
   console.log("categrô", categoryId);
-  
+
   useEffect(() => {
-    if(categoryId) {
+    if (categoryId) {
       const getProducts = async () => {
-      const data = await getAllProduct(
-        `/products?categoryId=${categoryId?._id}`
-      );
-      let productCategory = await data?.data?.product?.filter((item:any) => item?._id !== id)
-      console.log("productCategory", productCategory);
-      
-      setProducts(productCategory);
-    };
-    void getProducts();
+        const data = await getAllProduct(
+          `/products?categoryId=${categoryId?._id}`
+        );
+        let productCategory = await data?.data?.product?.filter(
+          (item: any) => item?._id !== id
+        );
+        console.log("productCategory", productCategory);
+
+        setProducts(productCategory);
+      };
+      void getProducts();
     }
-    
   }, [categoryId, id]);
   return (
     <div>
       <Heading className="mb-10">Sản phẩm tương tự</Heading>
-      <div className="product-swiper" style={{maxWidth: 1280, margin: "0 auto"}}>
+      <div
+        className="product-swiper"
+        style={{ maxWidth: 1280, margin: "0 auto" }}
+      >
         {!products.length && (
           <Swiper
             spaceBetween={10}
@@ -60,7 +64,7 @@ const ProductCategory = (props: any) => {
           >
             {Array(9)
               .fill(0)
-              .map((index) => (
+              .map((items, index) => (
                 <SwiperSlide
                   className="grid grid-cols-5 gap-5 mb-10"
                   key={index}
