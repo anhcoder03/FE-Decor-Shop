@@ -12,7 +12,6 @@ import CardSkeleton from "../common/CardSkeleton";
 const ProductCategory = (props: any) => {
   const [products, setProducts] = useState<Tproduct[]>([]);
   const { categoryId, id } = props;
-  console.log("categrô", categoryId);
 
   useEffect(() => {
     if (categoryId) {
@@ -23,7 +22,6 @@ const ProductCategory = (props: any) => {
         let productCategory = await data?.data?.product?.filter(
           (item: any) => item?._id !== id
         );
-        console.log("productCategory", productCategory);
 
         setProducts(productCategory);
       };
@@ -40,16 +38,16 @@ const ProductCategory = (props: any) => {
         {!products.length && (
           <Swiper
             spaceBetween={10}
-            slidesPerView={2}
+            slidesPerView={5}
             modules={[Navigation]}
             loop={true}
             navigation
             breakpoints={{
               1440: {
-                slidesPerView: 5,
+                slidesPerView: 6,
               },
               970: {
-                slidesPerView: 4,
+                slidesPerView: 5,
               },
               768: {
                 slidesPerView: 4,
@@ -77,16 +75,16 @@ const ProductCategory = (props: any) => {
         {products.length > 0 && (
           <Swiper
             spaceBetween={10}
-            slidesPerView={2}
+            slidesPerView={5}
             modules={[Navigation]}
             loop={true}
             navigation
             breakpoints={{
               1440: {
-                slidesPerView: 5,
+                slidesPerView: 6,
               },
               970: {
-                slidesPerView: 4,
+                slidesPerView: 5,
               },
               768: {
                 slidesPerView: 4,

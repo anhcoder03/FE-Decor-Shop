@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import { RootState } from "../../store/configureStore";
-import { CategoryState } from "../../store/category/categorySlice";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchAllCategories } from "../../store/category/handler";
 import { ICategory } from "../../types/Category";
 
-const ProductCategoryList = ({ categories, onClick }: { categories: ICategory[], onClick: () => void }) => {
+const ProductCategoryList = ({
+  categories,
+  onClick,
+}: {
+  categories: ICategory[];
+  onClick: () => void;
+}) => {
   return (
     <div>
       <div className="list-category pt-[30px]">

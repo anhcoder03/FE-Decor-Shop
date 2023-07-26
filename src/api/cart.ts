@@ -4,6 +4,6 @@ import { instance } from "./instance";
 export const addToCart = (data: any) => {
   return instance.post("/cart", data);
 };
-export const getCart = (userId: any) => {
+export const getCart = (userId: string) => {
   return instance.get(`/cart/${userId}`);
 };
