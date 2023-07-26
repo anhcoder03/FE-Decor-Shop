@@ -48,7 +48,7 @@ const ProductCategory = (props: any) => {
             navigation
             breakpoints={{
               1440: {
-                slidesPerView: 6,
+                slidesPerView: 5,
               },
               970: {
                 slidesPerView: 5,
@@ -85,7 +85,7 @@ const ProductCategory = (props: any) => {
             navigation
             breakpoints={{
               1440: {
-                slidesPerView: 6,
+                slidesPerView: 5,
               },
               970: {
                 slidesPerView: 5,

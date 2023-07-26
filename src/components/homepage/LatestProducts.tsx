@@ -33,7 +33,7 @@ const LatestProducts = () => {
             navigation
             breakpoints={{
               1440: {
-                slidesPerView: 6,
+                slidesPerView: 5,
               },
               970: {
                 slidesPerView: 5,
@@ -70,7 +70,7 @@ const LatestProducts = () => {
             navigation
             breakpoints={{
               1440: {
-                slidesPerView: 6,
+                slidesPerView: 5,
               },
               970: {
                 slidesPerView: 5,
