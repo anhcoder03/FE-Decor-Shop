@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import ProductItem from "./ProductItem";
 import ProductListHeading from "./ProductListHeading";
 import ProductFilterPrice from "./ProductFilterPrice";
@@ -15,7 +15,6 @@ import { ICategory } from "../../types/Category";
 import { getAllCategory } from "../../api/category";
 import { Tproduct } from "../../types/product";
 import { getAllProduct } from "../../api/product";
-import ReactPaginate from "react-paginate";
 import { Paginate } from "../paginate";
 
 const ProductListPage = () => {
@@ -29,7 +28,7 @@ const ProductListPage = () => {
     const data = await getAllCategory();
     setCategories(data.data.category);
   };
-  const handleGetProductByCategory = (id: string, categoryName: string) => {
+  const handleGetProductByCategory = (id: string) => {
     setUrl(`/products?categoryId=${id}`);
     setSelectedCategory(id);
   };
@@ -87,9 +86,7 @@ const ProductListPage = () => {
                         item._id === selectedCategory ? "bg-primary" : ""
                       }`}
                       key={item._id}
-                      onClick={() =>
-                        handleGetProductByCategory(item._id, item.name)
-                      }
+                      onClick={() => handleGetProductByCategory(item._id)}
                     >
                       {item.name}
                     </li>

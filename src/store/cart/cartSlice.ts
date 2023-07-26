@@ -38,7 +38,7 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(handleGetCart.pending, (state, action) => {
+    builder.addCase(handleGetCart.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(handleGetCart.fulfilled, (state, action) => {
