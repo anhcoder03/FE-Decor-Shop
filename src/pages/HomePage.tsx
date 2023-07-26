@@ -1,4 +1,3 @@
-import React from "react";
 import { LayoutMain } from "../components/layout";
 import Slider from "../components/layout/Slider";
 import Services from "../components/homepage/Services";

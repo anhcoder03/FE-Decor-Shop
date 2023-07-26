@@ -1,4 +1,3 @@
-import React from "react";
 import IconHome from "../icons/iconHome";
 import { Link } from "react-router-dom";
 

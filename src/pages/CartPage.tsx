@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { LayoutMain } from "../components/layout";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../store/configureStore";
 import formatPrice from "../utils/fomatPrice";
 import { Tproduct } from "../types/product";

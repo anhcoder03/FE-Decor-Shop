@@ -1,5 +1,3 @@
-import React from "react";
-
 const ProductImage = ({
   name,
   image,
@@ -13,7 +11,7 @@ const ProductImage = ({
         alt={name}
         src={image}
         className="object-cover h-full aspect-square rounded-xl"
-        style={{marginLeft: 230}}
+        style={{ marginLeft: 230 }}
       />
     </div>
   );

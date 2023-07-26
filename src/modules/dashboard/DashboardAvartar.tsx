@@ -1,5 +1,3 @@
-import React from "react";
-
 const DashboardAvartar = () => {
   return (
     <div className="w-[50px] h-[50px]">

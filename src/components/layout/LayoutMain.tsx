@@ -5,9 +5,6 @@ import Header from "./Header";
 import Menu from "./Menu";
 import Footer from "./Footer";
 import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/configureStore";
-import { handleGetCart } from "../../store/cart/handlers";
 
 interface ILayoutMainProps {
   children: React.ReactNode;

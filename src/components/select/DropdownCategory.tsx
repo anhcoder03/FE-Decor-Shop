@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useWatch } from "react-hook-form";
 import useClickOutSide from "../../hooks/useClickOutSIde";
 
@@ -11,7 +11,6 @@ const DropdownCategory = ({
   name,
   data,
   dropdownLabel = "Phân loại danh mục",
-  categoryId,
 }: any) => {
   const { show, setShow, nodeRef } = useClickOutSide(null);
   const dropdownValue = useWatch({
@@ -19,6 +18,7 @@ const DropdownCategory = ({
     name: "categoryId",
     defaultValue: "",
   });
+  console.log(dropdownValue);
   const handleClickDropdownItem = (e: any) => {
     setValue(name, e.target.dataset.value);
     setShow(false);

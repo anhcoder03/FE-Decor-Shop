@@ -1,5 +1,5 @@
 import React from "react";
-import { Control, FieldValues, useController } from "react-hook-form";
+import { useController } from "react-hook-form";
 
 interface IInputProps {
   type: string;

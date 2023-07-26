@@ -1,5 +1,3 @@
-import React from "react";
-
 const LoadingSearch = () => {
   return (
     <div className="flex items-center justify-center h-full p-10">

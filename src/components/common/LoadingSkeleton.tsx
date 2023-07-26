@@ -1,5 +1,3 @@
-import React from "react";
-
 const LoadingSkeleton = ({
   width = "100%",
   height = "100%",
