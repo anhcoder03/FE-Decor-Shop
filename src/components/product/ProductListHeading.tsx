@@ -1,9 +1,7 @@
-import React from "react";
-
 const ProductListHeading = () => {
   return (
     <div>
-      <div className="header-product flex justify-end py-8">
+      <div className="flex justify-end py-8 header-product">
         <div className="bg-[#222222] p-3 rounded-lg">
           <select name="HeadlineAct" id="HeadlineAct" className="bg-[#222222]">
             <option>Please select category</option>

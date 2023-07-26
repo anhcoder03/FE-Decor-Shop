@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ICart } from "../../types/Cart";
 import { getCart } from "../../api/cart";
 import { dataResponse } from "./cartSlice";
 

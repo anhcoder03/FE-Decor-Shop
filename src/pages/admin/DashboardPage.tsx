@@ -1,4 +1,3 @@
-import React from "react";
 import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 import DashboardHeading from "../../modules/dashboard/DashboardHeading";
 

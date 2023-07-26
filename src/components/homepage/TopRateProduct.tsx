@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Heading from "../common/Heading";
 import ProductItem from "../product/ProductItem";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -51,7 +51,7 @@ const TopRateProduct = () => {
           >
             {Array(9)
               .fill(0)
-              .map((item, index) => (
+              .map((_item, index) => (
                 <SwiperSlide
                   className="grid grid-cols-5 gap-5 mb-10"
                   key={index}

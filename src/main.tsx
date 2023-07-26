@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { ToastContainer } from "react-toastify";

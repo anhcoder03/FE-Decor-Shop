@@ -1,5 +1,3 @@
-import React from "react";
-
 const listService = [
   {
     icon: <i className="fa-solid fa-truck"></i>,

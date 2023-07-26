@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LayoutMain } from "../components/layout";
 import ProductDetailHeader from "../modules/productDetail/ProductDetailHeader";
 import ProductDetailDescription from "../modules/productDetail/ProductDetailDescription";

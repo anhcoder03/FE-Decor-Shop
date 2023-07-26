@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React from "react";
 import { Link } from "react-router-dom";
 import { Tproduct } from "../../types/product";
 import formatPrice from "../../utils/fomatPrice";

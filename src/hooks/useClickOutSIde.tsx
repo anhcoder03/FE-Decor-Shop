@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect, useRef, useState } from "react";
 
-export default function useClickOutSide(dom:any) {
+export default function useClickOutSide(dom: any) {
   const [show, setShow] = useState(false);
-  const nodeRef : any = useRef(null);
+  const nodeRef: any = useRef(null);
   useEffect(() => {
     function handleClickOutSide(e: any) {
       if (
