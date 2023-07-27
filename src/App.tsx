@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import LoadingPage from "./components/common/LoadingPage";
+import Checkout from "./pages/Checkout";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
@@ -31,6 +32,7 @@ function App() {
     { path: "signup", element: <SignupPage /> },
     { path: "signin", element: <SigninPage /> },
     { path: "cart", element: <CartPage /> },
+    { path: "checkout", element: <Checkout /> },
     { path: "dashboard", element: <DashboardPage /> },
     { path: "manage/product", element: <ProductManage /> },
     { path: "manage/add-product", element: <ProductAdd /> },
