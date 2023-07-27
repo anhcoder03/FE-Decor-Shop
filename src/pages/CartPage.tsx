@@ -59,6 +59,9 @@ const CartPage = () => {
               </div>
             ))}
         </div>
+        <Button type="button" to="/checkout">
+          Checkout
+        </Button>
       </div>
     </LayoutMain>
   );
