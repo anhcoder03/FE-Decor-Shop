@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useForm } from "react-hook-form";
 import { Input } from "../components/input";
 import { Button } from "../components/button";
@@ -8,12 +8,7 @@ const Checkout = () => {
   const { handleSubmit, control } = useForm();
   const checkout = async (values: any) => {
     try {
-      const response = await instance.post("/create_payment_url", values, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-Requested-With": "XMLHttpRequest", // Thêm tiêu đề này
-        },
-      });
+      const response = await instance.post("/create_payment_url", values);
       console.log(response);
     } catch (error) {
       console.log(error);
