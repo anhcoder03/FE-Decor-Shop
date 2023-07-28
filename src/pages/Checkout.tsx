@@ -21,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { order } from "../api/order";
 import { resetCart } from "../store/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   fullname: yup.string().required("Phải nhập tên sản phẩm!"),
@@ -37,6 +38,7 @@ const Checkout = () => {
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
   const auth = useSelector((state: RootState) => state.auth.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     setValue,
@@ -77,9 +79,9 @@ const Checkout = () => {
     };
     try {
       const response = await order(data);
-      console.log(response.data);
       toast.success(response.data.message);
       dispatch(resetCart());
+      navigate("/thank");
     } catch (error) {
       console.log(error);
     }
