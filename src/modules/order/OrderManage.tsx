@@ -1,3 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
@@ -8,6 +12,7 @@ import { IconDelete, IconEdit } from "../../components/icons";
 import formatPrice from "../../utils/fomatPrice";
 import { IUser } from "../../types/User";
 import { paymentMethods } from "../../constants/paymentMethods";
+import { Paginate } from "../../components/paginate";
 
 interface IOrder {
   paymentMethods: string;
@@ -40,12 +45,20 @@ const OrderManage = () => {
   ];
   const [orders, setOrder] = useState<IOrder[]>([]);
   const [loading, setLoading] = useState(false);
+  const [pageCount, setPageCount] = useState(1);
+  const [page, setPage] = useState(1);
+
+  const handlePageClick = (event: any) => {
+    const page = event.selected + 1;
+    setPage(page);
+  };
   const getOrders = async () => {
     try {
       setLoading(true);
-      const response: TOrderResponse = await getAllOrder();
+      const response: TOrderResponse = await getAllOrder(page);
       console.log(response);
       setOrder(response.data.orders);
+      setPageCount(Math.ceil(response.data.totalPage));
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -53,7 +66,7 @@ const OrderManage = () => {
   };
   useEffect(() => {
     void getOrders();
-  }, []);
+  }, [page]);
   console.log(orders);
   return (
     <DashboardLayout>
@@ -94,6 +107,10 @@ const OrderManage = () => {
           </tr>
         ))}
       </Table>
+      <Paginate
+        pageCount={pageCount}
+        handlePageClick={handlePageClick}
+      ></Paginate>
     </DashboardLayout>
   );
 };
