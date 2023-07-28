@@ -7,3 +7,6 @@ export const addToCart = (data: any) => {
 export const getCart = (userId: string) => {
   return instance.get(`/cart/${userId}`);
 };
+export const updateCart = (data: any) => {
+  return instance.put(`/cart`, data);
+};

@@ -8,6 +8,7 @@ interface IInputProps {
   control: any;
   className?: string;
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
 const Input = ({
@@ -17,6 +18,7 @@ const Input = ({
   placeholder,
   className = "",
   children,
+  disabled,
 }: IInputProps) => {
   const { field } = useController<any>({
     name,
@@ -26,12 +28,13 @@ const Input = ({
   });
   const styleInput = `w-full bg-[#222222] rounded-lg font-medium border-transparent outline-none   py-4 px-5 ${className}`;
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <input
         type={type}
         id={name}
         placeholder={placeholder}
         className={styleInput}
+        disabled={disabled}
         {...field}
       />
       {children ? <div className="input-icon"> {children} </div> : null}

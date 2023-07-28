@@ -23,6 +23,7 @@ import DropdownCategory from "../../components/select/DropdownCategory";
 import { instance } from "../../api/instance";
 import { ImageUpload } from "../../components/image";
 import useUploadImage from "../../hooks/useUploadImage";
+
 const ProductEdit = () => {
   const [category, setCategory] = useState([]);
   const [desc, setDesc] = useState<string>("");

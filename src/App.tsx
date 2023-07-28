@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import LoadingPage from "./components/common/LoadingPage";
 import Checkout from "./pages/Checkout";
+import OrderManage from "./modules/order/OrderManage";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
@@ -40,6 +41,7 @@ function App() {
     { path: "manage/category", element: <CategoryManage /> },
     { path: "manage/add-category", element: <CategoryAdd /> },
     { path: "manage/edit-category/:id", element: <CategoryEdit /> },
+    { path: "manage/order", element: <OrderManage /> },
     { path: "*", element: <PageNotFound /> },
   ]);
   return (

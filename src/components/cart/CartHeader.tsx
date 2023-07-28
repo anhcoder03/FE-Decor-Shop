@@ -1,7 +1,7 @@
 import IconHome from "../icons/iconHome";
 import { Link } from "react-router-dom";
 
-const CartHeader = () => {
+const CartHeader = ({ children = "Cart" }) => {
   return (
     <div className="Detail-Panner flex items-center justify-center bg-[#222222] py-10">
       <div className="flex overflow-hidden rounded-lg">
@@ -16,7 +16,7 @@ const CartHeader = () => {
         </Link>
         <li className="flex items-center bg-[#222222] px-4">
           <span className="flex items-center gap-1.5 transition text-[16px] text-primary border-r border-r-slate-400 pr-4">
-            Cart
+            {children}
           </span>
         </li>
       </div>

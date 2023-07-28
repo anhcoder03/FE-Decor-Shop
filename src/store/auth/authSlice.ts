@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { handleLogin } from "./handler";
-import { IUser } from "../../types/User";
+import { TDataResponse, handleLogin } from "./handler";
 
 export interface AuthState {
-  auth: IUser | null;
+  auth: TDataResponse | null;
   isLoading: boolean;
   error: string | null;
 }
