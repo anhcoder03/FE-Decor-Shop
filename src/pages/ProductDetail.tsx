@@ -74,17 +74,9 @@ const ProductDetail = () => {
                     {dataDetail?.name || ""}
                   </h1>
                   <p className="text-sm">Highest Rated Product</p>
-                  {/* <div className="-ms-0.5 flex">
-                    {Array(5)
-                      .fill(0)
-                      .map((index) => (
-                        <IconStar key={index}></IconStar>
-                      ))}
-                  </div> */}
                 </div>
                 <ProductPrice price={dataDetail?.price}></ProductPrice>
               </div>
-              {/* <div style={{marginTop: 20}}>{parse(dataDetail?.desc || "")}</div> */}
               <form className="mt-8">
                 <div className="flex gap-4 mt-8">
                   <Quantity

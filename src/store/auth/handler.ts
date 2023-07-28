@@ -4,13 +4,13 @@ import { login } from "../../api/auth";
 import { IUser } from "../../types/User";
 
 export type TDataResponse = {
-  user: IUser;
+  user: IUser | null;
   message: string;
   accessToken: string;
 };
 
 export const handleLogin = createAsyncThunk<
-  IUser,
+  TDataResponse,
   { email: string; password: string }
 >("auth/login", async (data: { email: string; password: string }, thunkApi) => {
   try {
