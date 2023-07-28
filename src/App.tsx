@@ -24,6 +24,7 @@ const ProductAdd = React.lazy(() => import("./modules/product/ProductAdd"));
 const ProductManage = React.lazy(
   () => import("./modules/product/ProductManage")
 );
+const ThankPage = React.lazy(() => import("./pages/ThankPage"));
 
 function App() {
   const routers = createBrowserRouter([
@@ -42,6 +43,7 @@ function App() {
     { path: "manage/add-category", element: <CategoryAdd /> },
     { path: "manage/edit-category/:id", element: <CategoryEdit /> },
     { path: "manage/order", element: <OrderManage /> },
+    { path: "thank", element: <ThankPage /> },
     { path: "*", element: <PageNotFound /> },
   ]);
   return (

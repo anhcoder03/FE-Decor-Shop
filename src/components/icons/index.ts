@@ -6,3 +6,4 @@ export { default as IconEdit } from "./IconEdit";
 export { default as IconStar } from "./IconStar";
 export { default as IconEyeClose } from "./IconEyeClose";
 export { default as IconEyeOpen } from "./IconEyeOpen";
+export { default as IconCheck } from "./IconCheck";
