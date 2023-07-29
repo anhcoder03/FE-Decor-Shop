@@ -8,7 +8,7 @@ import DashboardHeading from "../dashboard/DashboardHeading";
 import { Table } from "../../components/table";
 import { useEffect, useState } from "react";
 import { getAllOrder } from "../../api/order";
-import { IconDelete, IconEdit } from "../../components/icons";
+import { IconEdit } from "../../components/icons";
 import formatPrice from "../../utils/fomatPrice";
 import { IUser } from "../../types/User";
 import { paymentMethods } from "../../constants/paymentMethods";
@@ -47,6 +47,7 @@ const OrderManage = () => {
   const [loading, setLoading] = useState(false);
   const [pageCount, setPageCount] = useState(1);
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   const handlePageClick = (event: any) => {
     const page = event.selected + 1;
@@ -59,6 +60,7 @@ const OrderManage = () => {
       console.log(response);
       setOrder(response.data.orders);
       setPageCount(Math.ceil(response.data.totalPage));
+      setTotalPage(response.data.totalPage);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -101,16 +103,17 @@ const OrderManage = () => {
             <td>
               <div className="flex items-center gap-x-3 text-primary">
                 <IconEdit></IconEdit>
-                <IconDelete></IconDelete>
               </div>
             </td>
           </tr>
         ))}
       </Table>
-      <Paginate
-        pageCount={pageCount}
-        handlePageClick={handlePageClick}
-      ></Paginate>
+      {totalPage > 1 && (
+        <Paginate
+          pageCount={pageCount}
+          handlePageClick={handlePageClick}
+        ></Paginate>
+      )}
     </DashboardLayout>
   );
 };

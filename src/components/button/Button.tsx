@@ -10,6 +10,7 @@ interface IButtonProps {
   to?: string;
   height?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -19,6 +20,7 @@ const Button = ({
   to,
   children,
   className = "",
+  disabled,
 }: IButtonProps) => {
   const styleButton = ` flex items-center justify-center px-6 py-2 text-base font-semibold leading-4 text-white disabled:opacity-50 disabled:pointer-events-none bg-primary rounded-xl ${className}`;
 
@@ -38,7 +40,12 @@ const Button = ({
     );
   }
   return (
-    <button type={type} onClick={onClick} className={styleButton}>
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+      className={styleButton}
+    >
       {child}
     </button>
   );
