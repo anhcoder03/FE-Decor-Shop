@@ -4,6 +4,7 @@ import PageNotFound from "./pages/PageNotFound";
 import LoadingPage from "./components/common/LoadingPage";
 import Checkout from "./pages/Checkout";
 import OrderManage from "./modules/order/OrderManage";
+import UserManager from "./modules/user/UserManager";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
@@ -43,6 +44,7 @@ function App() {
     { path: "manage/add-category", element: <CategoryAdd /> },
     { path: "manage/edit-category/:id", element: <CategoryEdit /> },
     { path: "manage/order", element: <OrderManage /> },
+    { path: "manage/user", element: <UserManager /> },
     { path: "thank", element: <ThankPage /> },
     { path: "*", element: <PageNotFound /> },
   ]);

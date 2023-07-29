@@ -7,3 +7,9 @@ export const createUser = (user: IUser) => {
 export const login = (user: any) => {
   return instance.post("/signin", user);
 };
+export const getAllUser = () => {
+  return instance.get("/user")
+}
+export const deleteUser = (id: number | string) => {
+  return instance.delete(`/user/${id}`);
+};
