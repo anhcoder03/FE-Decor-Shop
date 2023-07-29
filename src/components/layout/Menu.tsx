@@ -12,7 +12,7 @@ const listMenu: IMenu[] = [
 const Menu = () => {
   return (
     <div className="max-w-[900px] mx-auto w-full">
-      <ul className="flex items-center justify-center gap-[50px] py-4">
+      <ul className=" items-center justify-center gap-[50px] py-4 hidden md:flex">
         {listMenu.length > 0 &&
           listMenu.map((item) => (
             <NavLink

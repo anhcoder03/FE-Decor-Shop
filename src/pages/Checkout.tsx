@@ -15,35 +15,37 @@ import { RootState } from "../store/configureStore";
 import { useDispatch, useSelector } from "react-redux";
 import { Tproduct } from "../types/product";
 import formatPrice from "../utils/fomatPrice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { order } from "../api/order";
 import { resetCart } from "../store/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
+import CartHeading from "../components/cart/CartHeading";
 
 const schema = yup.object({
   fullname: yup.string().required("Phải nhập tên sản phẩm!"),
   email: yup.string().required("Phải nhập tên sản phẩm!"),
-  shippingAddress: yup.string().required("Phải nhập địa chỉ giao hàng"),
   phoneNumber: yup
     .number()
     .integer("Phải nhập đúng số điện thoại")
     .required("Phải nhập số điện thoại!"),
+  shippingAddress: yup.string().required("Phải nhập địa chỉ giao hàng"),
 });
 
 const Checkout = () => {
   const carts = useSelector((state: RootState) => state.cart.carts);
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
   const auth = useSelector((state: RootState) => state.auth.auth);
+  const [paymentMethod, setPaymentMethod] = useState("CashPayment");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     handleSubmit,
     setValue,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema),
@@ -87,6 +89,12 @@ const Checkout = () => {
     }
   };
 
+  const handlePaymentMethodChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPaymentMethod(event.target.value);
+  };
+
   useEffect(() => {
     const arrayError = Object.values(errors);
     if (arrayError.length > 0) {
@@ -98,8 +106,9 @@ const Checkout = () => {
     <LayoutMain>
       <div className="container">
         <CartHeader>Checkout</CartHeader>
-        <div className="my-10 grid max-w-[1000px] w-full mx-auto  grid-cols-[550px_minmax(0,1fr)] gap-x-16">
+        <div className="my-10 grid max-w-[1000px] w-full mx-auto  grid-cols-[600px_minmax(0,1fr)] gap-x-16">
           <form action="">
+            <CartHeading>Thông tin nhận hàng</CartHeading>
             <Field>
               <Label htmlFor="fullname">Fullname</Label>
               <Input
@@ -110,16 +119,27 @@ const Checkout = () => {
                 disabled
               ></Input>
             </Field>
-            <Field>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                control={control}
-                name="email"
-                type="text"
-                placeholder="Email"
-                disabled
-              ></Input>
-            </Field>
+            <div className="grid grid-cols-2 gap-x-10">
+              <Field>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  control={control}
+                  name="email"
+                  type="text"
+                  placeholder="Email"
+                  disabled
+                ></Input>
+              </Field>
+              <Field>
+                <Label htmlFor="phoneNumber">Số điện thoại</Label>
+                <Input
+                  control={control}
+                  name="phoneNumber"
+                  type="text"
+                  placeholder="Số điện thoại"
+                ></Input>
+              </Field>
+            </div>
             <Field>
               <Label htmlFor="shippingAddress">Địa chỉ</Label>
               <Input
@@ -130,60 +150,111 @@ const Checkout = () => {
               ></Input>
             </Field>
             <Field>
-              <Label htmlFor="phoneNumber">Số điện thoại</Label>
-              <Input
-                control={control}
-                name="phoneNumber"
-                type="text"
-                placeholder="Số điện thoại"
-              ></Input>
+              <Label>Shipping Methods</Label>
+              <label
+                htmlFor="CashPayment"
+                className={`${
+                  paymentMethod === "CashPayment"
+                    ? "border border-primary"
+                    : "border border-gray-400"
+                } p-5 cursor-pointer flex items-center gap-x-3 w-full rounded-lg`}
+              >
+                <input
+                  type="radio"
+                  id="CashPayment"
+                  value={"CashPayment"}
+                  checked={paymentMethod === "CashPayment"}
+                  onChange={handlePaymentMethodChange}
+                />
+                <img src="/cod.png" alt="" />
+                <span>Thanh toán khi nhận hàng</span>
+              </label>
+              <label
+                htmlFor="PaymentMethod"
+                className={`${
+                  paymentMethod === "PaymentMethod"
+                    ? "border border-primary"
+                    : "border border-gray-400"
+                } p-5 cursor-pointer flex items-center gap-x-3 w-full rounded-lg`}
+              >
+                <input
+                  type="radio"
+                  value={"PaymentMethod"}
+                  id="PaymentMethod"
+                  checked={paymentMethod === "PaymentMethod"}
+                  onChange={handlePaymentMethodChange}
+                />
+                <img src="/vnpay.png" alt="" />
+                <span>Mobile banking của các ngân hàng qua VNPay Thẻ ATM</span>
+              </label>
             </Field>
-            <div className="flex items-center gap-x-10">
-              <Button
-                type="submit"
-                onClick={handleSubmit(handlePayment)}
-                className="w-full h-12"
-              >
-                Thanh toán online
-              </Button>
-              <Button
-                type="submit"
-                onClick={handleSubmit(handleCheckout)}
-                className="w-full h-12"
-              >
-                Thanh toán khi nhận hàng
-              </Button>
-            </div>
           </form>
-          <div className="flex flex-col gap-y-5">
-            {carts &&
-              carts.length > 0 &&
-              carts.map((item: Tproduct) => (
-                <div className="flex items-center gap-x-5" key={item._id}>
-                  <div>
-                    <img
-                      src={item?.productId?.image}
-                      alt=""
-                      className="max-w-[80px] object-cover"
-                    />
+          <div>
+            <CartHeading>Thông tin đơn hàng</CartHeading>
+            <div className="flex flex-col gap-y-5">
+              {carts &&
+                carts.length > 0 &&
+                carts.map((item: Tproduct) => (
+                  <div
+                    className="flex items-center pb-2 border-b border-dotted gap-x-5"
+                    key={item._id}
+                  >
+                    <div>
+                      <img
+                        src={item?.productId?.image}
+                        alt=""
+                        className="max-w-[80px] object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-primary ">
+                        {item?.productId?.name}
+                      </h3>
+                      <p className="flex items-center text-sm gap-x-2">
+                        <span>Số lượng:</span>
+                        <span>{item?.quantity}</span>
+                      </p>
+                      <p className="flex items-center text-sm gap-x-2">
+                        <span>Tổng giá:</span>
+                        <span className="text-red-500">
+                          {formatPrice(item?.totalPrice)}
+                        </span>
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold text-primary ">
-                      {item?.productId?.name}
-                    </h3>
-                    <p className="flex items-center text-sm gap-x-2">
-                      <span>Số lượng:</span>
-                      <span>{item?.quantity}</span>
-                    </p>
-                    <p className="flex items-center text-sm gap-x-2">
-                      <span>Tổng giá:</span>
-                      <span className="text-red-500">
-                        {formatPrice(item?.totalPrice)}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              <div className="flex items-center justify-between">
+                <span>Tổng tiền đơn hàng</span>
+                <span>{formatPrice(totalAmount)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Phí vận chuyển</span>
+                <span>Freeship</span>
+              </div>
+              <div className="flex items-center gap-x-10">
+                {paymentMethod === "CashPayment" ? (
+                  <Button
+                    type="submit"
+                    onClick={handleSubmit(handleCheckout)}
+                    className="w-full h-14"
+                    disabled={isSubmitting}
+                    isLoading={isSubmitting}
+                  >
+                    Thanh toán
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    onClick={handleSubmit(handlePayment)}
+                    className="w-full h-14"
+                    disabled={isSubmitting}
+                    isLoading={isSubmitting}
+                  >
+                    Thanh toán
+                  </Button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
