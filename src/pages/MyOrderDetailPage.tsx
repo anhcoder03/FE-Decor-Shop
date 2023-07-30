@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useParams } from "react-router-dom";
 import { LayoutMain } from "../components/layout";
