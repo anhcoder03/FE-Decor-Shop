@@ -2,9 +2,6 @@ import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import LoadingPage from "./components/common/LoadingPage";
-import Checkout from "./pages/Checkout";
-import OrderManage from "./modules/order/OrderManage";
-import UserManager from "./modules/user/UserManager";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ProductPage = React.lazy(() => import("./pages/ProductPage"));
@@ -26,6 +23,11 @@ const ProductManage = React.lazy(
   () => import("./modules/product/ProductManage")
 );
 const ThankPage = React.lazy(() => import("./pages/ThankPage"));
+const UserManager = React.lazy(() => import("./modules/user/UserManager"));
+const OrderManage = React.lazy(() => import("./modules/order/OrderManage"));
+const Checkout = React.lazy(() => import("./pages/Checkout"));
+const MyOrderPage = React.lazy(() => import("./pages/MyOrderPage"));
+const MyOrderDetailPage = React.lazy(() => import("./pages/MyOrderDetailPage"));
 
 function App() {
   const routers = createBrowserRouter([
@@ -46,6 +48,8 @@ function App() {
     { path: "manage/order", element: <OrderManage /> },
     { path: "manage/user", element: <UserManager /> },
     { path: "thank", element: <ThankPage /> },
+    { path: "my-order", element: <MyOrderPage /> },
+    { path: "my-order/detail/:id", element: <MyOrderDetailPage /> },
     { path: "*", element: <PageNotFound /> },
   ]);
   return (

@@ -10,28 +10,9 @@ import { useEffect, useState } from "react";
 import { getAllOrder } from "../../api/order";
 import { IconEdit } from "../../components/icons";
 import formatPrice from "../../utils/fomatPrice";
-import { IUser } from "../../types/User";
 import { paymentMethods } from "../../constants/paymentMethods";
 import { Paginate } from "../../components/paginate";
-
-interface IOrder {
-  paymentMethods: string;
-  paymentStatus: string;
-  phoneNumber: string;
-  shippingAddress: string;
-  totalAmount: number;
-  userId: IUser;
-  _id: string;
-}
-
-type TOrderResponse = {
-  data: {
-    orders: IOrder[];
-    message: string;
-    totalOrder: number;
-    totalPage: number;
-  };
-};
+import { IOrder, TOrderResponse } from "../../types/order";
 
 const OrderManage = () => {
   const headings = [
@@ -57,7 +38,6 @@ const OrderManage = () => {
     try {
       setLoading(true);
       const response: TOrderResponse = await getAllOrder(page);
-      console.log(response);
       setOrder(response.data.orders);
       setPageCount(Math.ceil(response.data.totalPage));
       setTotalPage(response.data.totalPage);
