@@ -28,9 +28,11 @@ const schema = yup.object({
   fullname: yup.string().required("Phải nhập tên sản phẩm!"),
   email: yup.string().required("Phải nhập tên sản phẩm!"),
   phoneNumber: yup
-    .number()
-    .integer("Phải nhập đúng số điện thoại")
-    .required("Phải nhập số điện thoại!"),
+    .string()
+    .required("Vui lòng nhập số điện thoại")
+    .matches(/^(0[0-9]+)$/, "Số điện thoại không đúng định dạng")
+    .min(10, "Số điện thoại phải có ít nhất 10 chữ số")
+    .max(11, "Số điện thoại không được vượt quá 11 chữ số"),
   shippingAddress: yup.string().required("Phải nhập địa chỉ giao hàng"),
 });
 
