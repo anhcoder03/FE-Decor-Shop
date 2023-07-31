@@ -18,6 +18,8 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { RootState } from "../store/configureStore";
 import { addToCart } from "../api/cart";
+import TabPanel from "../components/tab-panel/Tabpanel";
+import { Rating, Tab, Tabs } from "@mui/material";
 
 const ProductDetail = () => {
   const { slug } = useParams<string>();
@@ -25,6 +27,11 @@ const ProductDetail = () => {
   const auth: any = useSelector((state: RootState) => state.auth.auth);
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
+  const [value, setValue] = useState(0);
+  const [rating] = useState(5);
+  const handleChange = (_event: any, newValue: any) => {
+    setValue(newValue);
+  };
   useEffect(() => {
     async function getDataProduct() {
       const response = await getProductWithSlug(slug);
@@ -48,6 +55,12 @@ const ProductDetail = () => {
       navigate("/signin");
     }
   };
+  function a11yProps(index: any) {
+    return {
+      id: `simple-tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
 
   return (
     <LayoutMain>
@@ -97,9 +110,108 @@ const ProductDetail = () => {
           </div>
         </div>
       </section>
-      <ProductDetailDescription
+      {/* <ProductDetailDescription
         description={dataDetail?.desc || ""}
-      ></ProductDetailDescription>
+      ></ProductDetailDescription> */}
+      <div className="container">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab
+            label="Description"
+            sx={{
+              color: value === 0 ? "#dba87f" : "#ffffff",
+            }}
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="Comment"
+            sx={{
+              color: value === 1 ? "#dba87f" : "#ffffff",
+            }}
+            {...a11yProps(1)}
+          />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <ProductDetailDescription
+            description={dataDetail?.desc || ""}
+          ></ProductDetailDescription>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <div className="comment-wrraper">
+            <div className="listComment mt-8">
+              {/* {listComment.length > 0 ? (
+                listComment.map((item) => (
+                  <div key={item._id} className="mb-5">
+                    <div className="flex gap-x-4 items-center">
+                      <img
+                        src={item?.userImage}
+                        className="w-[40px] h-[40px] rounded-full object-cover"
+                        alt={item.title}
+                      />
+                      <div className="">
+                        <p className="font-medium">{item.username}</p>
+                        <p className="flex items-center gap-2  text-xs lg:text-lg">
+                          <Rating readOnly value={item?.rating} />
+                          <span className="text-xs">
+                            {convertTimestampToDateTime(item.createdAt)}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-2">
+                      <span className="text-sm">{item.review}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center  text-primary">
+                  Chưa có đánh giá nào cho sản phẩm này.
+                </p>
+              )} */}
+            </div>
+            <form className="comment">
+              <h1 className=" mt-10 text-lg font-semibold">
+                Để lại đánh giá cho sản phẩm này
+              </h1>
+              <div className="rating my-5">
+                <h3 className="font-semibold text-xs lg:text-sm text-[#666]">
+                  Đánh giá sao *
+                </h3>
+                <span className="flex gap-x-1">
+                  <Rating
+                    name="simple-controlled"
+                    value={rating}
+                    onChange={(_event, newValue: any) => {
+                      setValue(newValue);
+                    }}
+                  />
+                </span>
+              </div>
+              <div className="mb-5">
+                <h3 className="font-semibold text-xs lg:text-sm text-[#666]">
+                  Viết đánh giá cho sản phẩm này *
+                </h3>
+                <textarea
+                  name=""
+                  id=""
+                  cols={30}
+                  rows={10}
+                  className="w-full text-white bg-[#222222] p-5 mt-2 rounded-md"
+                ></textarea>
+              </div>
+              <Button
+                type="button"
+                className="commentBtn max-w-[250px] mx-auto w-full mb-10 h-14"
+              >
+                Bình luận
+              </Button>
+            </form>
+          </div>
+        </TabPanel>
+      </div>
       <ProductCategory
         categoryId={dataDetail?.categoryId}
         id={dataDetail?._id}

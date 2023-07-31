@@ -30,7 +30,7 @@ const Header = () => {
     navigate("/signin");
   };
   useEffect(() => {
-    if (auth?.user._id) {
+    if (auth?.user?._id) {
       dispatch(handleGetCart(auth?.user._id) as any);
     }
   }, [auth]);
