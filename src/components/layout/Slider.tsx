@@ -1,5 +1,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
+import {
+  Navigation,
+  Autoplay,
+  Pagination,
+  Mousewheel,
+  Keyboard,
+} from "swiper/modules";
 
 const slideImages = [
   {
@@ -27,7 +33,7 @@ const Slider = () => {
           delay: 3000,
           disableOnInteraction: false,
         }}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+        modules={[Navigation, Autoplay, Pagination, Mousewheel, Keyboard]}
         className="mySwiper"
       >
         {slideImages.length > 0 &&

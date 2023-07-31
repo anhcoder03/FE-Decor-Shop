@@ -6,12 +6,11 @@ const ProductImage = ({
   image: string | undefined;
 }) => {
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-1 ">
+    <div className="flex items-center justify-center w-full">
       <img
         alt={name}
         src={image}
-        className="object-cover h-full aspect-square rounded-xl"
-        style={{ marginLeft: 230 }}
+        className="object-cover h-full max-w-[400px] w-full mx-auto my-auto aspect-square rounded-xl"
       />
     </div>
   );
