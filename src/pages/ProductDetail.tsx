@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -69,10 +70,7 @@ const ProductDetail = () => {
       ></ProductDetailHeader>
       <section>
         <div className="relative mx-auto max-w-[1280px] py-8">
-          <div
-            className="grid items-start grid-cols-1 gap-8 md:grid-cols-2"
-            style={{ maxHeight: 400 }}
-          >
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 items-center justify-center min-h-[500px] w-full">
             <ProductImage
               image={dataDetail?.image}
               name={dataDetail?.name}
@@ -110,9 +108,6 @@ const ProductDetail = () => {
           </div>
         </div>
       </section>
-      {/* <ProductDetailDescription
-        description={dataDetail?.desc || ""}
-      ></ProductDetailDescription> */}
       <div className="container">
         <Tabs
           value={value}
@@ -141,37 +136,6 @@ const ProductDetail = () => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div className="comment-wrraper">
-            <div className="listComment mt-8">
-              {/* {listComment.length > 0 ? (
-                listComment.map((item) => (
-                  <div key={item._id} className="mb-5">
-                    <div className="flex gap-x-4 items-center">
-                      <img
-                        src={item?.userImage}
-                        className="w-[40px] h-[40px] rounded-full object-cover"
-                        alt={item.title}
-                      />
-                      <div className="">
-                        <p className="font-medium">{item.username}</p>
-                        <p className="flex items-center gap-2  text-xs lg:text-lg">
-                          <Rating readOnly value={item?.rating} />
-                          <span className="text-xs">
-                            {convertTimestampToDateTime(item.createdAt)}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-2">
-                      <span className="text-sm">{item.review}</span>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-center  text-primary">
-                  Chưa có đánh giá nào cho sản phẩm này.
-                </p>
-              )} */}
-            </div>
             <form className="comment">
               <h1 className=" mt-10 text-lg font-semibold">
                 Để lại đánh giá cho sản phẩm này

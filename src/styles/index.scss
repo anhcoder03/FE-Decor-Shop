@@ -135,7 +135,7 @@
 .table-wrapper td {
   padding: 15px 30px;
 }
-.css-iiteii-MuiButtonBase-root-MuiTab-root.Mui-selected{
+.css-iiteii-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: #dba87f !important;
 }
 .css-1aquho2-MuiTabs-indicator {
@@ -144,4 +144,18 @@
 
 .MuiTabs-root {
   border-bottom: 1px solid rgb(218, 225, 231) !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Customize the scrollbar thumb */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #dba87f;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #dba87f;
 }
