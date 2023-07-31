@@ -8,14 +8,14 @@ import useClickOutSide from "../../hooks/useClickOutSIde";
 const DropdownCategory = ({
   control,
   setValue,
-  name,
+  name = "categoryId",
   data,
   dropdownLabel = "Phân loại danh mục",
 }: any) => {
   const { show, setShow, nodeRef } = useClickOutSide(null);
   const dropdownValue = useWatch({
     control,
-    name: "categoryId",
+    name,
     defaultValue: "",
   });
   console.log(dropdownValue);

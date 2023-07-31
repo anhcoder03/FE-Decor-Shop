@@ -18,3 +18,6 @@ export const getOrderById = (id: any) => {
 export const deleteOrder = (id: any) => {
   return instance.delete(`/order/${id}`);
 };
+export const updateOrder = (id: any, data: any) => {
+  return instance.put(`/order/${id}`, data);
+};

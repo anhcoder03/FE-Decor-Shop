@@ -89,7 +89,7 @@ const MyOrderPage = () => {
 
   return (
     <LayoutMain>
-      <div className="container">
+      <div className="container mb-10">
         <div className="mb-10">
           <OrderHeader></OrderHeader>
         </div>

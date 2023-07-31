@@ -25,6 +25,7 @@ const ProductManage = React.lazy(
 const ThankPage = React.lazy(() => import("./pages/ThankPage"));
 const UserManager = React.lazy(() => import("./modules/user/UserManager"));
 const OrderManage = React.lazy(() => import("./modules/order/OrderManage"));
+const OrderUpdate = React.lazy(() => import("./modules/order/OrderUpdate"));
 const Checkout = React.lazy(() => import("./pages/Checkout"));
 const MyOrderPage = React.lazy(() => import("./pages/MyOrderPage"));
 const MyOrderDetailPage = React.lazy(() => import("./pages/MyOrderDetailPage"));
@@ -46,6 +47,7 @@ function App() {
     { path: "manage/add-category", element: <CategoryAdd /> },
     { path: "manage/edit-category/:id", element: <CategoryEdit /> },
     { path: "manage/order", element: <OrderManage /> },
+    { path: "manage/edit-order/:id", element: <OrderUpdate /> },
     { path: "manage/user", element: <UserManager /> },
     { path: "thank", element: <ThankPage /> },
     { path: "my-order", element: <MyOrderPage /> },
