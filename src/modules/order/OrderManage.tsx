@@ -13,6 +13,7 @@ import formatPrice from "../../utils/fomatPrice";
 import { paymentMethods } from "../../constants/paymentMethods";
 import { Paginate } from "../../components/paginate";
 import { IOrder, TOrderResponse } from "../../types/order";
+import { useNavigate } from "react-router-dom";
 
 const OrderManage = () => {
   const headings = [
@@ -21,7 +22,9 @@ const OrderManage = () => {
     "Address",
     "Phone",
     "Payment Methods",
+    "Payment Status",
     "Total Amount",
+    "Status",
     "Action",
   ];
   const [orders, setOrder] = useState<IOrder[]>([]);
@@ -29,6 +32,7 @@ const OrderManage = () => {
   const [pageCount, setPageCount] = useState(1);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const navigate = useNavigate();
 
   const handlePageClick = (event: any) => {
     const page = event.selected + 1;
@@ -77,12 +81,16 @@ const OrderManage = () => {
                 </span>
               )}
             </td>
+            <td>{item?.paymentStatus}</td>
             <td className="text-sm text-red-500">
               {formatPrice(item?.totalAmount)}đ
             </td>
+            <td>{item?.status}</td>
             <td>
               <div className="flex items-center gap-x-3 text-primary">
-                <IconEdit></IconEdit>
+                <IconEdit
+                  onClick={() => navigate(`/manage/edit-order/${item?._id}`)}
+                ></IconEdit>
               </div>
             </td>
           </tr>

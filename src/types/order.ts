@@ -23,3 +23,12 @@ export interface IOrder {
   carts: ICart[];
   status: string;
 }
+
+export type TOrderDetail = {
+  data: {
+    orders: IOrder;
+    message: string;
+    totalOrder: number;
+    totalPage: number;
+  };
+};
