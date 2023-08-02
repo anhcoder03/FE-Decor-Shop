@@ -4,45 +4,31 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHeading from "../dashboard/DashboardHeading";
 import { Table } from "../../components/table";
 import { IconDelete, IconEdit } from "../../components/icons";
 import { Button } from "../../components/button";
-import { deleteProduct, getAllProduct } from "../../api/product";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Tproduct } from "../../types/product";
 import formatPrice from "../../utils/fomatPrice";
 import { Paginate } from "../../components/paginate";
+import {
+  useGetProductsQuery,
+  useRemoveProductMutation,
+} from "../../services/product.service";
+import { toast } from "react-toastify";
 const ProductManage = () => {
   const headings = ["STT", "Image", "Name", "Price", "Action"];
-  const [loading, setLoading] = useState(false);
-  const [product, setProduct] = useState([]);
   const [url, setUrl] = useState("/products");
-  const [pageCount, setPageCount] = useState(0);
+  const { data, isLoading } = useGetProductsQuery(url);
+  const [removeProduct] = useRemoveProductMutation();
   const navigate = useNavigate();
   const handlePageClick = (event: any) => {
     const page = event.selected + 1;
     setUrl(`/products?page=${page}`);
-    console.log(url);
-  };
-  useEffect(() => {
-    void loadData();
-  }, [url]);
-
-  const loadData = async (): Promise<any> => {
-    try {
-      setLoading(true);
-      void (await getAllProduct(url).then(({ data }) => {
-        setProduct(data?.product);
-        setPageCount(Math.ceil(data?.totalPage));
-        setLoading(false);
-      }));
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleRemove = (id: any) => {
@@ -57,14 +43,15 @@ const ProductManage = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          void (await deleteProduct(id).then(() => {
-            void loadData();
-            void Swal.fire(
-              "Deleted!",
-              "Your file has been deleted.",
-              "success"
-            );
-          }));
+          void (await removeProduct(id)
+            .then(() => {
+              void Swal.fire(
+                "Deleted!",
+                "Your file has been deleted.",
+                "success"
+              );
+            })
+            .catch((error) => toast.error(error.data.message)));
         } catch (error) {
           console.log(error);
         }
@@ -78,8 +65,12 @@ const ProductManage = () => {
           + Create Product
         </Button>
       </DashboardHeading>
-      <Table headings={headings} loading={loading} length={product.length}>
-        {product?.map((item: Tproduct, index: number) => (
+      <Table
+        headings={headings}
+        loading={isLoading}
+        length={data?.product.length}
+      >
+        {data?.product?.map((item: Tproduct, index: number) => (
           <tr key={index}>
             <td>{index + 1}</td>
             <td>
@@ -108,7 +99,7 @@ const ProductManage = () => {
       </Table>
       <Paginate
         handlePageClick={handlePageClick}
-        pageCount={pageCount}
+        pageCount={data?.totalPage as number}
       ></Paginate>
     </DashboardLayout>
   );

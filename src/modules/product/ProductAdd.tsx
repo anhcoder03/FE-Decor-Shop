@@ -16,7 +16,6 @@ import { Button } from "../../components/button";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createProduct } from "../../api/product";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DropdownCategory from "../../components/select/DropdownCategory";
@@ -24,28 +23,28 @@ import { instance } from "../../api/instance";
 import { Tproduct } from "../../types/product";
 import { ImageUpload } from "../../components/image";
 import useUploadImage from "../../hooks/useUploadImage";
+import { useAddProductMutation } from "../../services/product.service";
+
+const schema = yup.object({
+  name: yup.string().required("Phải nhập tên sản phẩm!"),
+  price: yup.number().required("phải nhập giá sản phẩm"),
+  categoryId: yup.string().required("phải chọn danh mục cho sản phẩm!!"),
+});
+
 const ProductAdd = () => {
   const [desc, setDesc] = useState<string>("");
   const [category, setCategory] = useState([]);
+  const [addProduct] = useAddProductMutation();
   const navigate = useNavigate();
-  const schema = yup.object({
-    name: yup.string().required("Phải nhập tên sản phẩm!"),
-    price: yup.number().required("phải nhập giá sản phẩm"),
-    categoryId: yup.string().required("phải chọn danh mục cho sản phẩm!!"),
-  });
-  useEffect(() => {
-    const arrayError = Object.values(errors);
-    if (arrayError.length > 0) {
-      toast.error(arrayError[0]?.message);
-    }
-  });
+  const { image, handleDeleteImage, handleSelectImage, loading } =
+    useUploadImage();
   const {
     handleSubmit,
     control,
     setValue,
     formState: { errors },
   } = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
     resolver: yupResolver(schema),
   });
 
@@ -60,8 +59,6 @@ const ProductAdd = () => {
   useEffect(() => {
     void handleGetCategories();
   }, []);
-  const { image, handleDeleteImage, handleSelectImage, loading } =
-    useUploadImage();
 
   const handleSubmitProduct: any = async (values: Tproduct) => {
     if (image === "") {
@@ -72,16 +69,21 @@ const ProductAdd = () => {
       toast.error("Nhập mô tả sản phẩm!");
       return;
     }
-    try {
-      const product = await createProduct({ ...values, desc, image });
-      if (product) {
-        toast.success("Thêm sản phẩm thành công");
+    await addProduct({ ...values, desc, image })
+      .unwrap()
+      .then((payload) => {
+        toast.success(payload.message);
         navigate("/manage/product");
-      }
-    } catch (error: any) {
-      toast.error(error.response.data.message);
-    }
+      })
+      .catch((error) => toast.error(error.data.message));
   };
+
+  useEffect(() => {
+    const arrayError = Object.values(errors);
+    if (arrayError.length > 0) {
+      toast.error(arrayError[0]?.message);
+    }
+  });
 
   return (
     <DashboardLayout>

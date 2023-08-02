@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useEffect } from "react";
 import DashboardHeader from "./DashboardHeader";

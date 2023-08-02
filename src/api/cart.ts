@@ -10,4 +10,3 @@ export const getCart = (userId: string) => {
 export const updateCart = (data: any) => {
   return instance.put(`/cart`, data);
 };
-
