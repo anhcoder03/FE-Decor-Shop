@@ -11,15 +11,18 @@ import {
   REGISTER,
 } from "redux-persist";
 import cartSlice from "./cart/cartSlice";
+import productApi, { productReducer } from "../services/product.service";
 
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["auth", "cart"],
 };
 
 const reducer = combineReducers({
   auth: authSlice,
   cart: cartSlice,
+  [productApi.reducerPath]: productReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -30,7 +33,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(productApi.middleware),
 });
 const persistor = persistStore(store);
 

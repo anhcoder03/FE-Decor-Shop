@@ -16,15 +16,17 @@ import { Button } from "../../components/button";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { getOneProduct, putProduct } from "../../api/product";
+import { getOneProduct } from "../../api/product";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import DropdownCategory from "../../components/select/DropdownCategory";
 import { instance } from "../../api/instance";
 import { ImageUpload } from "../../components/image";
 import useUploadImage from "../../hooks/useUploadImage";
+import { useEditProductMutation } from "../../services/product.service";
 
 const ProductEdit = () => {
+  const [updateProduct] = useEditProductMutation();
   const [category, setCategory] = useState([]);
   const [desc, setDesc] = useState<string>("");
   const [categoryName, setCategoryName] = useState<string>();
@@ -44,7 +46,7 @@ const ProductEdit = () => {
   });
   const { id } = useParams<string>();
   useEffect(() => {
-    getOneProduct(id).then(({ data }) => {
+    void getOneProduct(id).then(({ data }) => {
       console.log(data);
       setCategoryName(data?.product?.categoryId?.name);
       reset(data?.product);
@@ -86,15 +88,13 @@ const ProductEdit = () => {
       toast.error("Nhập mô tả sản phẩm!");
       return;
     }
-    try {
-      const product = await putProduct({ ...values, desc, image });
-      if (product) {
-        toast.success("cập nhật sản phẩm thành công");
+    await updateProduct({ ...values, desc, image })
+      .unwrap()
+      .then((payload) => {
+        toast.success(payload.message);
         navigate("/manage/product");
-      }
-    } catch (error: any) {
-      toast.error(error.response.data.message);
-    }
+      })
+      .catch((error) => toast.error(error.data.message));
   };
   return (
     <DashboardLayout>
