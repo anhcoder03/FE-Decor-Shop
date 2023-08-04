@@ -28,5 +28,4 @@ const ThankPage = () => {
     </div>
   );
 };
-
 export default ThankPage;

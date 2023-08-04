@@ -13,7 +13,7 @@ export interface IProductResponse {
 const productApi = createApi({
   reducerPath: "products",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1",
+    baseUrl: "https://wjj6js-8080.csb.app/api/v1",
   }),
   tagTypes: ["Product"],
   endpoints: (build) => ({
