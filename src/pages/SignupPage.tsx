@@ -25,7 +25,7 @@ type DataResponse = {
   };
 };
 
-const shema = yup.object({
+const schema = yup.object({
   name: yup.string().required("* Trường này không được để trống!"),
   email: yup
     .string()
@@ -43,7 +43,7 @@ const SignupPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<formData>({
     mode: "onBlur",
-    resolver: yupResolver<any>(shema),
+    resolver: yupResolver<any>(schema),
   });
 
   const handleRegisterUser = async (values: formData) => {
