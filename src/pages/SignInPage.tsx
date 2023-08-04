@@ -22,7 +22,7 @@ type FormDataType = {
   password: string;
 };
 
-const shema = yup.object({
+const schema = yup.object({
   email: yup
     .string()
     .required("* Trường này không được để trống!")
@@ -40,7 +40,7 @@ const SignInPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormDataType>({
     mode: "onBlur",
-    resolver: yupResolver(shema),
+    resolver: yupResolver(schema),
   });
   const handleSignIn = async (values: FormDataType) => {
     try {
