@@ -9,7 +9,7 @@ const PageNotFound = () => {
         </h1>
         <div className="text-left h-[40px] flex items-center">
           <h2 className="text-sm font-normal">
-            This page could not be found{/* */}.
+            This page could not be found (erorr){/* */}.
           </h2>
         </div>
       </div>
