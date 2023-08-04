@@ -16,7 +16,7 @@ const Header = () => {
         <IconUser></IconUser>
         <div className="flex items-center gap-4">
           <div className="relative">
-            <IconCart></IconCart>
+           <IconCart></IconCart>
             <span className="absolute flex items-center justify-center w-5 h-5 rounded-full -right-3 -top-3 bg-primary">
               0
             </span>
