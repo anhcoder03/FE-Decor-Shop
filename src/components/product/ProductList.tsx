@@ -23,7 +23,7 @@ const ProductList = ({
       <div className="grid grid-cols-3 gap-30px pt-[30px]">
         {!loading &&
           products !== null &&
-          products.map((item) => (
+          products?.map((item) => (
             <ProductItem key={item._id} data={item}></ProductItem>
           ))}
         {!loading && products.length === 0 && (
